@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.apigate.swarmui.mapper.StoragePvMapper" >
+  <resultMap id="BaseResultMap" type="com.apigate.swarmui.model.StoragePv" >
+    <id column="pvid" property="pvid" jdbcType="INTEGER" />
+    <result column="clusterid" property="clusterid" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="storagetype" property="storagetype" jdbcType="VARCHAR" />
+    <result column="localpath" property="localpath" jdbcType="VARCHAR" />
+    <result column="storagesize" property="storagesize" jdbcType="INTEGER" />
+    <result column="volumes" property="volumes" jdbcType="INTEGER" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="containername" property="containername" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pvid, clusterid, name, storagetype, localpath, storagesize, volumes, remark, containername
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from swarm_storage_pv
+    where pvid = #{pvid,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from swarm_storage_pv
+    where clusterid = #{clusterid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from swarm_storage_pv
+    where pvid = #{pvid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.apigate.swarmui.model.StoragePv" >
+    insert into swarm_storage_pv (pvid, clusterid, name, 
+      storagetype, localpath, storagesize, 
+      volumes, remark, containername)
+    values (#{pvid,jdbcType=INTEGER}, #{clusterid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
+      #{storagetype,jdbcType=VARCHAR}, #{localpath,jdbcType=VARCHAR}, #{storagesize,jdbcType=INTEGER}, 
+      #{volumes,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, #{containername,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.apigate.swarmui.model.StoragePv" >
+    insert into swarm_storage_pv
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pvid != null" >
+        pvid,
+      </if>
+      <if test="clusterid != null" >
+        clusterid,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="storagetype != null" >
+        storagetype,
+      </if>
+      <if test="localpath != null" >
+        localpath,
+      </if>
+      <if test="storagesize != null" >
+        storagesize,
+      </if>
+      <if test="volumes != null" >
+        volumes,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="containername != null" >
+        containername,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pvid != null" >
+        #{pvid,jdbcType=INTEGER},
+      </if>
+      <if test="clusterid != null" >
+        #{clusterid,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="storagetype != null" >
+        #{storagetype,jdbcType=VARCHAR},
+      </if>
+      <if test="localpath != null" >
+        #{localpath,jdbcType=VARCHAR},
+      </if>
+      <if test="storagesize != null" >
+        #{storagesize,jdbcType=INTEGER},
+      </if>
+      <if test="volumes != null" >
+        #{volumes,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="containername != null" >
+        #{containername,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.apigate.swarmui.model.StoragePv" >
+    update swarm_storage_pv
+    <set >
+      <if test="clusterid != null" >
+        clusterid = #{clusterid,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="storagetype != null" >
+        storagetype = #{storagetype,jdbcType=VARCHAR},
+      </if>
+      <if test="localpath != null" >
+        localpath = #{localpath,jdbcType=VARCHAR},
+      </if>
+      <if test="storagesize != null" >
+        storagesize = #{storagesize,jdbcType=INTEGER},
+      </if>
+      <if test="volumes != null" >
+        volumes = #{volumes,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="containername != null" >
+        containername = #{containername,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where pvid = #{pvid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.apigate.swarmui.model.StoragePv" >
+    update swarm_storage_pv
+    set clusterid = #{clusterid,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      storagetype = #{storagetype,jdbcType=VARCHAR},
+      localpath = #{localpath,jdbcType=VARCHAR},
+      storagesize = #{storagesize,jdbcType=INTEGER},
+      volumes = #{volumes,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR},
+      containername = #{containername,jdbcType=VARCHAR}
+    where pvid = #{pvid,jdbcType=INTEGER}
+  </update>
+</mapper>

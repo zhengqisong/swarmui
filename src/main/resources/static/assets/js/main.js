@@ -1,0 +1,3 @@
+$(function() {
+	$.contextLoad("/dashboard.html");
+});

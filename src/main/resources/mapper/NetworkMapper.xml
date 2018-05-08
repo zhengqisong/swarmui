@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.apigate.swarmui.mapper.NetworkMapper" >
+  <resultMap id="BaseResultMap" type="com.apigate.swarmui.model.Network" >
+    <id column="networkid" property="networkid" jdbcType="VARCHAR" />
+    <result column="clusterid" property="clusterid" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="subnet" property="subnet" jdbcType="VARCHAR" />
+    <result column="gateway" property="gateway" jdbcType="VARCHAR" />
+    <result column="iprange" property="iprange" jdbcType="VARCHAR" />
+    <result column="driver" property="driver" jdbcType="VARCHAR" />
+    <result column="ipv6" property="ipv6" jdbcType="VARCHAR" />
+    <result column="internal" property="internal" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    networkid, clusterid, name, code, subnet, gateway, iprange, driver, ipv6, internal
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from swarm_network
+    where networkid = #{networkid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByClusterId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from swarm_network
+    where clusterid = #{clusterid,jdbcType=INTEGER}
+  </select>
+  <select id="selectByCode" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from swarm_network
+    where code = #{code,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByUserClusterKey" resultMap="BaseResultMap" parameterType="com.apigate.swarmui.model.UserClusterKey" >
+    select 
+    a.networkid, a.clusterid, a.name, a.code, a.subnet, a.gateway, a.iprange, 
+    a.driver, a.ipv6, a.internal
+    from swarm_network a,swarm_user_network b
+    where b.userid = #{userid,jdbcType=INTEGER} 
+    and a.clusterid = #{clusterid,jdbcType=INTEGER}
+    and a.networkid=b.networkid
+  </select>
+  <select id="countByClusterId" resultType="int" parameterType="java.lang.Integer" >
+    select 
+    count(*)
+    from swarm_network
+    where clusterid = #{clusterid,jdbcType=INTEGER}
+  </select>
+  <select id="countByUserClusterKey" resultType="int" parameterType="com.apigate.swarmui.model.UserClusterKey" >
+    select 
+    count(*)
+    from swarm_network a,swarm_user_network b
+    where b.userid = #{userid,jdbcType=INTEGER} 
+    and a.clusterid = #{clusterid,jdbcType=INTEGER}
+    and a.networkid=b.networkid
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from swarm_network
+    where networkid = #{networkid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.apigate.swarmui.model.Network" >
+    insert into swarm_network (networkid, clusterid, name, code, 
+      subnet, gateway, iprange, 
+      driver, ipv6, internal
+      )
+    values (#{networkid,jdbcType=VARCHAR}, #{clusterid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR},#{code,jdbcType=VARCHAR}, 
+      #{subnet,jdbcType=VARCHAR}, #{gateway,jdbcType=VARCHAR}, #{iprange,jdbcType=VARCHAR}, 
+      #{driver,jdbcType=VARCHAR}, #{ipv6,jdbcType=VARCHAR}, #{internal,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.apigate.swarmui.model.Network" >
+    insert into swarm_network
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="networkid != null" >
+        networkid,
+      </if>
+      <if test="clusterid != null" >
+        clusterid,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="subnet != null" >
+        subnet,
+      </if>
+      <if test="gateway != null" >
+        gateway,
+      </if>
+      <if test="iprange != null" >
+        iprange,
+      </if>
+      <if test="driver != null" >
+        driver,
+      </if>
+      <if test="ipv6 != null" >
+        ipv6,
+      </if>
+      <if test="internal != null" >
+        internal,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="networkid != null" >
+        #{networkid,jdbcType=VARCHAR},
+      </if>
+      <if test="clusterid != null" >
+        #{clusterid,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="subnet != null" >
+        #{subnet,jdbcType=VARCHAR},
+      </if>
+      <if test="gateway != null" >
+        #{gateway,jdbcType=VARCHAR},
+      </if>
+      <if test="iprange != null" >
+        #{iprange,jdbcType=VARCHAR},
+      </if>
+      <if test="driver != null" >
+        #{driver,jdbcType=VARCHAR},
+      </if>
+      <if test="ipv6 != null" >
+        #{ipv6,jdbcType=VARCHAR},
+      </if>
+      <if test="internal != null" >
+        #{internal,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.apigate.swarmui.model.Network" >
+    update swarm_network
+    <set >
+      <if test="clusterid != null" >
+        clusterid = #{clusterid,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="subnet != null" >
+        subnet = #{subnet,jdbcType=VARCHAR},
+      </if>
+      <if test="gateway != null" >
+        gateway = #{gateway,jdbcType=VARCHAR},
+      </if>
+      <if test="iprange != null" >
+        iprange = #{iprange,jdbcType=VARCHAR},
+      </if>
+      <if test="driver != null" >
+        driver = #{driver,jdbcType=VARCHAR},
+      </if>
+      <if test="ipv6 != null" >
+        ipv6 = #{ipv6,jdbcType=VARCHAR},
+      </if>
+      <if test="internal != null" >
+        internal = #{internal,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where networkid = #{networkid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.apigate.swarmui.model.Network" >
+    update swarm_network
+    set clusterid = #{clusterid,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      subnet = #{subnet,jdbcType=VARCHAR},
+      gateway = #{gateway,jdbcType=VARCHAR},
+      iprange = #{iprange,jdbcType=VARCHAR},
+      driver = #{driver,jdbcType=VARCHAR},
+      ipv6 = #{ipv6,jdbcType=VARCHAR},
+      internal = #{internal,jdbcType=VARCHAR}
+    where networkid = #{networkid,jdbcType=VARCHAR}
+  </update>
+</mapper>

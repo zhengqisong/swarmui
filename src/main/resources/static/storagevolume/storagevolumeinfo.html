@@ -1,0 +1,61 @@
+
+<div class="am-cf am-padding">
+   <div class="am-fl am-cf" id="navigationId">
+   <strong class="am-text-primary am-text-lg">首页</strong> / <small><a href="javascript:$.contextLoad('/storagevolume/storagevolumelist.html')">存储管理</a></small> / <small>存储管理</small></div>
+</div>
+
+<hr>
+<script language="javascript" src="/storagevolume/storagevolumeinfo.js?version=0.0.1"></script>
+<form class="am-form" id="storageVolumeForm" data-am-validator>
+			<div class="am-g am-margin-top">
+              <div class="am-u-sm-4 am-u-md-2 am-text-right">
+                ID
+              </div>
+              <div class="am-u-sm-8 am-u-md-4 am-u-end col-end">
+                <input type="text" name="volumeid" minlength="2" maxlength="200" placeholder="" disabled class="am-input-sm">
+              </div>
+              <div class="am-hide-sm-only am-u-md-6"></div>
+            </div>  
+			<div class="am-g am-margin-top">
+              <div class="am-u-sm-4 am-u-md-2 am-text-right">
+                编码
+              </div>
+              <div class="am-u-sm-8 am-u-md-4 am-u-end col-end">
+                <input type="text" name="code" minlength="2" maxlength="200" placeholder="" disabled class="am-input-sm">
+              </div>
+              <div class="am-hide-sm-only am-u-md-6"></div>
+            </div>            
+            
+            <div class="am-g am-margin-top">
+            <div class="am-u-sm-4 am-u-md-2 am-text-right">存储PV</div>
+            <div class="am-u-sm-8 am-u-md-4 am-padding-left-0 am-padding-right-0">
+            	<div class="am-u-sm-12 am-u-md-12" id="pvPanelId">
+                </div>
+                <div class="am-u-sm-12 am-u-md-12" id="pvRemarkPanelId">	
+            	</div>
+            </div>
+            <div class="am-hide-sm-only am-u-md-6"></div>
+          </div>
+          <div class="am-g am-margin-top">
+              <div class="am-u-sm-4 am-u-md-2 am-text-right">
+                名称
+              </div>
+              <div class="am-u-sm-8 am-u-md-4 am-u-end col-end">
+                <input type="text" name="name" minlength="2" maxlength="200" placeholder="输入存储名称，便于识别（至少 2 个字符）" required class="am-input-sm">
+              </div>
+              <div class="am-hide-sm-only am-u-md-6">*必填</div>
+            </div>
+            <div class="am-g am-margin-top">
+              <div class="am-u-sm-4 am-u-md-2 am-text-right">
+                存储容量
+              </div>
+              <div class="am-u-sm-8 am-u-md-4">
+                <input type="number" name="storagesize" min="1" placeholder="存储的最大值，单位G" required class="am-input-sm">
+              </div>
+              <div class="am-hide-sm-only am-u-md-6">*必填</div>
+            </div>        
+<div class="am-margin">
+  <button type="submit" class="am-btn am-btn-primary am-btn-xs">提交保存</button>
+  <button type="button" id="new_storagevolume_cancel" class="am-btn am-btn-primary am-btn-xs">放弃保存</button>
+</div>
+          </form>

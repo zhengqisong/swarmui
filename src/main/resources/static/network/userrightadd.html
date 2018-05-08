@@ -1,0 +1,42 @@
+
+<div class="am-cf am-padding">
+   <div class="am-fl am-cf" id="navigation_html">
+   <strong class="am-text-primary am-text-lg">首页</strong>
+    / <small><a href="javascript:$.contextLoad('/network/networklist.html')">网络管理</a></small>
+    / <small>网络授权<span id="channel_networknameId">()</span></small>
+    </div>
+</div>
+
+<hr>
+<script language="javascript" src="/network/userrightadd.js?version=0.0.1"></script>
+<form class="am-form" id="userrightForm" data-am-validator>
+            <div class="am-g am-margin-top">
+              <div class="am-u-sm-4 am-u-md-2 am-text-right">
+                授权用户
+              </div>
+              <div class="am-u-sm-8 am-u-md-4 am-u-end col-end" id="userSelectPanelId">
+                <select data-am-selected="{btnSize: 'sm'}" name="userid" required>
+	            </select>
+              </div>
+              <div class="am-hide-sm-only am-u-md-6">*必填</div>
+            </div>
+            <div class="am-g am-margin-top">
+            <div class="am-u-sm-4 am-u-md-2 am-text-right">权限</div>
+            <div class="am-u-sm-8 am-u-md-4">
+            	<label class="am-radio-inline">
+                  <input type="radio" value="r" name="rights" required checked> 读
+                </label>
+                <label class="am-radio-inline">
+                  <input type="radio" value="rw" name="rights"> 读写                
+                </label>
+                <label class="am-radio-inline">
+                  <input type="radio" value="rwd" name="rights" > 读写删                
+                </label>
+            </div>
+            <div class="am-hide-sm-only am-u-md-6">*必填</div>
+          </div>     
+<div class="am-margin">
+  <button type="submit" class="am-btn am-btn-primary am-btn-xs">提交保存</button>
+  <button type="button" id="new_userright_cancel" class="am-btn am-btn-primary am-btn-xs">放弃保存</button>
+</div>
+          </form>

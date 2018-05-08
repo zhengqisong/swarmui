@@ -1,0 +1,71 @@
+<div class="am-cf am-padding">
+   <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">首页</strong> / <small>仪表盘</small></div>
+</div>
+
+<hr>
+<script language="javascript" src="/assets/js/dashboard.js"></script>
+
+<ul class="am-avg-sm-1 am-avg-md-4 am-margin am-padding am-text-center admin-content-list" id="resource">
+  <li><a href="javascript:$.contextLoad('/network/networklist.html')" class="am-text-success"><span class="am-icon-btn am-icon-sitemap"></span><br/>网络<br/><span id="resourceNetwork">3</span></a></li>
+  <li><a href="javascript:$.contextLoad('/storagevolume/storagevolumelist.html')" class="am-text-warning"><span class="am-icon-btn am-icon-cubes"></span><br/>存储<br/><span id="resourceVolume"></span></a></li>
+  <li><a href="javascript:$.contextLoad('/config/configlist.html')" class="am-text-danger"><span class="am-icon-btn am-icon-files-o"></span><br/>配置文件<br/><span id="resourceConfig"></span></a></li>
+  <li><a href="javascript:$.contextLoad('/secret/secretlist.html')" class="am-text-secondary"><span class="am-icon-btn am-icon-lock"></span><br/>敏感数据<br/><span id="resourceSecret"></span></a></li>
+</ul>
+      
+ <div class="am-g">
+   <div class="am-u-md-12">
+     <div class="am-panel am-panel-default">
+       <div class="am-panel-hd am-cf" >服务信息</div>
+       <div id="collapse-panel-2" class="am-in">
+         <table class="am-table am-table-bd am-table-bdrs am-table-striped am-table-hover">
+           <tbody>
+           <tr>
+             <th>服务总数</th>
+             <th>容器数</th>
+             <th>正常</th>
+             <th>异常</th>
+             <th>宕机</th>
+           </tr>
+           <tr>
+             <td id="serviceNumId">加载中...</td>
+             <td id="serviceTaskNumId"></td>
+             <td><span class="am-badge am-badge-success" id="serviceStatusOkNumId"></span></td>
+             <td><span class="am-badge am-badge-warning" id="serviceStatusWarnNumId"></span></td>
+             <td><span class="am-badge am-badge-danger" id="serviceStatusErrorNumId"></span></td>
+           </tr>
+           </tbody>
+         </table>
+       </div>
+     </div>
+   </div>
+   </div>
+   
+ <div class="am-g">
+   <div class="am-u-md-12">
+     <div class="am-panel am-panel-default">
+       <div class="am-panel-hd am-cf" >Swarm集群信息</div>
+       <div id="collapse-panel-2" class="am-in">
+         <table class="am-table am-table-bd am-table-bdrs am-table-striped am-table-hover">
+           <tbody>
+           <tr>
+             <th>总节点数</th>
+             <th>管理节点数</th>
+             <th>正常</th>
+             <th>异常</th>
+             <th>处理器(核)</th>
+             <th>内存G</th>
+           </tr>
+           <tr>
+             <td id="nodeNumId">加载中...</td>
+             <td id="managerNumId"></td>
+             <td><span class="am-badge am-badge-success" id="statusOkNumId"></span></td>
+             <td><span class="am-badge am-badge-danger" id="statusErrorNumId"></span></td>
+             <td id="cpuNumId"></td>
+             <td id="memNumId"></td>
+           </tr>
+           </tbody>
+         </table>
+       </div>
+     </div>
+   </div>
+</div> 

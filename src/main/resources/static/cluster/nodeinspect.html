@@ -1,0 +1,148 @@
+
+<div class="am-cf am-padding">
+   <div class="am-fl am-cf" id="navigationId">
+   <strong class="am-text-primary am-text-lg">系统管理</strong>
+    / <small><a href="javascript:$.contextLoad('/cluster/clusterlist.html')">集群管理</a></small>
+    / <small><a href="#">节点管理<span id="channel_clusternameId">()</span></a></small>
+    / <small>节点详情<span id="channel_clusternameId">()</span></small> 
+    </div>
+</div>
+
+<hr>
+<script language="javascript" src="/cluster/nodeinspect.js"></script>
+<div class="am-g">
+        <div class="am-u-sm-12 am-u-md-6">
+          <div class="am-btn-toolbar" id="toolbarId">
+            <div class="am-btn-group am-btn-group-xs">
+           	<button type="button" id="backupId" class="am-btn am-btn-default"><span class="am-icon-mail-reply"></span> 返回</button>
+			</div>
+          </div>
+        </div>
+</div>
+<div class="am-g">
+  <div class="am-u-sm-12 am-u-md-8">
+	<!-- 标签和插件列 -->
+	<div class="am-u-sm-12 am-u-md-12">
+	  <div class="am-panel am-panel-default">
+	  <div class="am-panel-bd">
+	   <form class="am-form am-form-horizontal">
+	       <div class="am-form-group">
+	       	  <label for="user-name" class="am-u-sm-6 am-form-label">状态</label>
+              <div class="am-u-sm-6" id="node_State"></div>
+	       </div>
+	       <div class="am-form-group">
+	       	  <label for="user-name" class="am-u-sm-6 am-form-label">角色</label>
+              <div class="am-u-sm-6" id="node_Role"></div>
+	       </div>
+	       <div class="am-form-group">
+	       	  <label for="user-name" class="am-u-sm-6 am-form-label">管理状态</label>
+              <div class="am-u-sm-6" id="node_Reachability"></div>
+	       </div>
+	       <div class="am-form-group">
+	       	  <label for="user-name" class="am-u-sm-6 am-form-label">可用性</label>
+              <div class="am-u-sm-6" id="node_Availability"></div>
+	       </div>
+	       <div class="am-form-group">
+	       	  <label for="user-name" class="am-u-sm-6 am-form-label">cpu资源(纳秒)</label>
+              <div class="am-u-sm-6" id="node_NanoCPUs"></div>
+	       </div>
+	       <div class="am-form-group">
+	       	  <label for="user-name" class="am-u-sm-6 am-form-label">内存资源(字节)</label>
+              <div class="am-u-sm-6" id="node_MemoryBytes"></div>
+	       </div>
+	    </form>
+	   </div>
+	   </div>
+	</div>
+	<div class="am-u-sm-12 am-u-md-12">
+	  <div class="am-panel am-panel-default">
+	  <div class="am-panel-bd">
+	   <form class="am-form am-form-horizontal">
+	       <div class="am-form-group">
+	       	  <label for="user-name" class="am-u-sm-4 am-form-label">ID</label>
+              <div class="am-u-sm-8" id="node_ID"></div>
+	       </div>
+	       <div class="am-form-group">
+	       	  <label for="user-name" class="am-u-sm-4 am-form-label">主名称</label>
+              <div class="am-u-sm-8" id="node_Hostname"></div>
+	       </div>
+	       <div class="am-form-group">
+	       	  <label for="user-name" class="am-u-sm-4 am-form-label">地址</label>
+              <div class="am-u-sm-8" id="node_Addr"></div>
+	       </div>
+	       <div class="am-form-group">
+	       	  <label for="user-name" class="am-u-sm-4 am-form-label">引擎版本</label>
+              <div class="am-u-sm-8" id="node_EngineVersion"></div>
+	       </div>
+	       <div class="am-form-group">
+	       	  <label for="user-name" class="am-u-sm-4 am-form-label">系统信息</label>
+              <div class="am-u-sm-8" id="node_Platform"></div>
+	       </div>
+	       <div class="am-form-group">
+	       	  <label for="user-name" class="am-u-sm-4 am-form-label">创建时间</label>
+              <div class="am-u-sm-8" id="node_CreatedAt"></div>
+	       </div>
+	       <div class="am-form-group">
+	       	  <label for="user-name" class="am-u-sm-4 am-form-label">更新</label>
+              <div class="am-u-sm-8" id="node_UpdatedAt"></div>
+	       </div>
+	       
+	    </form>
+	   </div>
+	   </div>
+	</div>
+	
+  </div>
+  <div class="am-u-sm-12 am-u-md-4">
+  	<!-- 基本信息、资源、状态 -->
+	  	<div class="am-panel am-panel-default">
+	     <div class="am-panel-bd">
+	       <p>标签</p>
+	       <table class="am-table am-table-striped am-table-hover table-main" id="labelTab">
+              <thead>
+              <tr>
+                <th class="table-title">key</th>
+                <th class="table-title">value</th>
+                <th class="table-set">操作</th>
+              </tr>
+              </thead>
+              <tbody >
+              </tbody>
+            </table>
+            <form class="am-form am-form-horizontal" id="nodeLabeleForm" data-am-validator>
+		       <div class="am-form-group">
+		       	  <label for="user-name" class="am-u-sm-4 am-form-label">key</label>
+	              <div class="am-u-sm-8">
+	              <input type="text" name="key" minlength="1" maxlength="200" placeholder="标签key" class="am-input-sm" required>
+	              </div>
+		       </div>
+		       <div class="am-form-group">
+		       	  <label for="user-name" class="am-u-sm-4 am-form-label">value</label>
+	              <div class="am-u-sm-8">
+	              <input type="text" name="value" minlength="1" maxlength="200" placeholder="标签value" class="am-input-sm" required>
+	              </div>
+		       </div>
+		       <div class="am-margin">
+				  <button type="submit" class="am-btn am-btn-primary am-btn-xs">提交保存</button>
+				</div>
+	        </form>
+	     </div>
+	    </div>
+	    <div class="am-panel am-panel-default">
+	     <div class="am-panel-bd">
+	       <p>插件</p>
+	       <table class="am-table am-table-striped am-table-hover table-main" id="pluginTab">
+              <thead>
+              <tr>
+                <th class="table-title">类型</th>
+                <th class="table-title">名称</th>
+              </tr>
+              </thead>
+              <tbody >
+              </tbody>
+            </table>
+	     </div>
+	    </div>
+    </div>
+</div>
+

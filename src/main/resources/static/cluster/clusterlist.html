@@ -1,0 +1,42 @@
+<div class="am-cf am-padding">
+   <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">系统管理</strong> / <small>集群管理</small></div>
+</div>
+
+<hr>
+
+<script language="javascript" src="/cluster/clusterlist.js"></script>
+<div class="am-g">
+        <div class="am-u-sm-12 am-u-md-12">
+          <div class="am-btn-toolbar">
+            <div class="am-btn-group am-btn-group-xs">
+              <button type="button" id="newClusterId" class="am-btn am-btn-default"><span class="am-icon-plus"></span> 新增</button>
+              <button type="button" id="nodesId" class="am-btn am-btn-default"><span class="am-icon-laptop"></span> 节点管理</button>
+              <button type="button" id="registersId" class="am-btn am-btn-default"><span class="am-icon-image"></span> 镜像中心</button>
+              <button type="button" id="labelsId" class="am-btn am-btn-default"><span class="am-icon-object-group"></span> 集群标签</button>
+              <button type="button" id="storepvsId" class="am-btn am-btn-default"><span class="am-icon-database"></span> 存储管理</button>
+              <button type="button" id="usersId" class="am-btn am-btn-default"><span class="am-icon-users"></span> 授权用户</button>
+            </div>
+          </div>
+        </div>
+</div>        
+<div class="am-g">
+        <div class="am-u-sm-12">
+          <form class="am-form" id="clusterListFormId">
+            <table class="am-table am-table-striped am-table-hover table-main" id="listTab">
+              <thead>
+              <tr>
+                <th class="table-check"></th>
+                <th class="table-title">名称</th>
+                <th class="table-type am-hide-sm-only">最大cpu数</th>
+                <th class="table-author am-hide-sm-only">最大内存数</th>
+                <th class="table-date am-hide-sm-only">最大容器数</th>
+                <th class="table-date am-hide-sm-only">状态</th>
+                <th class="table-set">操作</th>
+              </tr>
+              </thead>
+              <tbody >
+              </tbody>
+            </table>
+         </form>
+        </div>
+</div>

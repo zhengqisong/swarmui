@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.apigate.swarmui.mapper.ServiceNetworkRelationMapper" >
+  <resultMap id="BaseResultMap" type="com.apigate.swarmui.model.ServiceNetworkRelation" >
+    <result column="serviceid" property="serviceid" jdbcType="VARCHAR" />
+    <result column="networkid" property="networkid" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ServiceResultMap" type="com.apigate.swarmui.model.SwarmServiceBasic" >
+    <result column="serviceid" property="serviceid" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />    
+  </resultMap>
+  <resultMap id="NetworkResultMap" type="com.apigate.swarmui.model.Network" >
+    <result column="networkid" property="networkid" jdbcType="VARCHAR" />
+    <result column="clusterid" property="clusterid" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="subnet" property="subnet" jdbcType="VARCHAR" />
+    <result column="gateway" property="gateway" jdbcType="VARCHAR" />
+    <result column="iprange" property="iprange" jdbcType="VARCHAR" />
+    <result column="driver" property="driver" jdbcType="VARCHAR" />
+    <result column="ipv6" property="ipv6" jdbcType="VARCHAR" />
+    <result column="internal" property="internal" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    serviceid, configid
+  </sql>
+  <sql id="Service_Column_List" >
+    b.serviceid, b.name
+  </sql>
+  <sql id="Network_Column_List" >
+    b.networkid, b.clusterid, b.name, b.subnet, b.gateway, b.iprange, b.driver, b.ipv6, b.internal
+  </sql>
+  
+  <insert id="insert" parameterType="com.apigate.swarmui.model.ServiceNetworkRelation" >
+    insert into swarm_service_network (serviceid, networkid)
+    values (#{serviceid,jdbcType=VARCHAR}, #{networkid,jdbcType=VARCHAR})
+  </insert>
+  <delete id="deleteByServiceId" parameterType="java.lang.String" >
+    delete from swarm_service_network where serviceid = #{serviceid,jdbcType=VARCHAR}
+  </delete>
+  <select id="selectByNetworkId" resultMap="ServiceResultMap" parameterType="java.lang.String" >
+  	select 
+  	<include refid="Service_Column_List" />
+  	from swarm_service_network a, swarm_service b 
+  	where a.serviceid=b.serviceid and networkid = #{networkid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByServiceId" resultMap="NetworkResultMap" parameterType="java.lang.String" >
+  	select 
+  	<include refid="Network_Column_List" />
+  	from swarm_service_network a, swarm_network b 
+  	where a.networkid=b.networkid and serviceid = #{serviceid,jdbcType=VARCHAR}
+  </select>
+</mapper>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.apigate.swarmui.mapper.ServiceConfigRelationMapper" >
+  <resultMap id="BaseResultMap" type="com.apigate.swarmui.model.ServiceConfigRelation" >
+    <result column="serviceid" property="serviceid" jdbcType="VARCHAR" />
+    <result column="configid" property="configid" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ServiceResultMap" type="com.apigate.swarmui.model.SwarmServiceBasic" >
+    <result column="serviceid" property="serviceid" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />    
+  </resultMap>
+  <resultMap id="ConfigResultMap" type="com.apigate.swarmui.model.Config" >
+    <result column="configid" property="configid" jdbcType="VARCHAR" />
+    <result column="clusterid" property="clusterid" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    serviceid, configid
+  </sql>
+  <sql id="Service_Column_List" >
+    b.serviceid, b.name
+  </sql>
+  <sql id="Config_Column_List" >
+    b.configid, b.clusterid, b.name, b.code
+  </sql>
+  
+  <insert id="insert" parameterType="com.apigate.swarmui.model.ServiceConfigRelation" >
+    insert into swarm_service_config (serviceid, configid)
+    values (#{serviceid,jdbcType=VARCHAR}, #{configid,jdbcType=VARCHAR})
+  </insert>
+  <delete id="deleteByServiceId" parameterType="java.lang.String" >
+    delete from swarm_service_config where serviceid = #{serviceid,jdbcType=VARCHAR}
+  </delete>
+  <select id="selectByConfigId" resultMap="ServiceResultMap" parameterType="java.lang.String" >
+  	select 
+  	<include refid="Service_Column_List" />
+  	from swarm_service_config a, swarm_service b 
+  	where a.serviceid=b.serviceid and configid = #{configid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByServiceId" resultMap="ConfigResultMap" parameterType="java.lang.String" >
+  	select 
+  	<include refid="Config_Column_List" />
+  	from swarm_service_config a, swarm_config b 
+  	where a.configid=b.configid and serviceid = #{serviceid,jdbcType=VARCHAR}
+  </select>
+  
+  
+</mapper>

@@ -1,0 +1,76 @@
+
+<div class="am-cf am-padding">
+   <div class="am-fl am-cf">
+   <strong class="am-text-primary am-text-lg">首页</strong>
+    / <small><a href="javascript:$.contextLoad('/config/configlist.html')">配置管理</a></small>
+    / <small>配置详情<span id="channel_confignameId">()</span></small>
+    </div>
+</div>
+
+<hr>
+<script language="javascript" src="/config/configinspect.js?version=0.0.1"></script>
+<div class="am-g">
+        <div class="am-u-sm-12 am-u-md-6">
+          <div class="am-btn-toolbar" id="toolbarId">
+            <div class="am-btn-group am-btn-group-xs">
+           	<button type="button" id="backupId" class="am-btn am-btn-default"><span class="am-icon-mail-reply"></span> 返回</button>
+            </div>
+          </div>
+        </div>
+</div>
+<form class="am-form" id="configForm" data-am-validator>
+            <div class="am-g am-margin-top">
+              <div class="am-u-sm-4 am-u-md-2 am-text-right">
+               名称
+              </div>
+              <div class="am-u-sm-8 am-u-md-4">
+                <input type="text" name="name" minlength="3" maxlength="200" placeholder="输入账号（至少3 个字符）" class="am-input-sm" required>
+              </div>
+              <div class="am-hide-sm-only am-u-md-6"></div>
+            </div>
+            <div class="am-g am-margin-top">
+              <div class="am-u-sm-4 am-u-md-2 am-text-right">
+                ID
+              </div>
+              <div class="am-u-sm-8 am-u-md-4 am-u-end col-end">
+                <input type="text" name="configid" minlength="2" maxlength="200" required class="am-input-sm">
+              </div>
+              <div class="am-hide-sm-only am-u-md-6"></div>
+            </div>
+            <div class="am-g am-margin-top">
+              <div class="am-u-sm-4 am-u-md-2 am-text-right">
+                编码
+              </div>
+              <div class="am-u-sm-8 am-u-md-4 am-u-end col-end">
+                <input type="text" name="code" minlength="2" maxlength="200" required class="am-input-sm">
+              </div>
+              <div class="am-hide-sm-only am-u-md-6"></div>
+            </div>
+            <div class="am-g am-margin-top">
+              <div class="am-u-sm-4 am-u-md-2 am-text-right">
+                创建时间
+              </div>
+              <div class="am-u-sm-8 am-u-md-4">
+                <input type="text" name="CreatedAt" minlength="1" required class="am-input-sm">
+              </div>
+              <div class="am-hide-sm-only am-u-md-6"></div>
+            </div>
+            <div class="am-g am-margin-top">
+              <div class="am-u-sm-4 am-u-md-2 am-text-right">
+                更新时间
+              </div>
+              <div class="am-u-sm-8 am-u-md-4">
+                <input type="text" name="UpdatedAt" minlength="1" placeholder="输入手机号码" required class="am-input-sm">
+              </div>
+              <div class="am-hide-sm-only am-u-md-6"></div>
+            </div>
+            <div class="am-g am-margin-top">
+              <div class="am-u-sm-4 am-u-md-2 am-text-right">
+                配置内容
+              </div>
+              <div class="am-u-sm-8 am-u-md-4">
+                <textarea rows="6" name="Data" ></textarea>
+              </div>
+              <div class="am-hide-sm-only am-u-md-6"></div>
+            </div>         
+          </form>

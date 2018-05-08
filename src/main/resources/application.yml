@@ -1,0 +1,69 @@
+swarmui:
+   clusterCertPath: /data/swarmui/cert
+
+mybatis: 
+  mapperLocations: classpath:mapper/*.xml
+  typeAliasesPackage: com.apigate.swarmui.model
+
+#pagehelper分页插件
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+  
+#时间戳统一转换
+#spring:jackson.date-format:
+#spring.jackson.time-zone=GMT+8
+
+#i18n configuation
+#spring.messages.basename=i18n/messages
+
+logging:
+  level:
+    root: warn 
+
+spring:
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  messages:
+    basename: i18n/messages
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://10.0.17.65:3308/abcdefg?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    username: abcdefg
+    password: abcdefg_user
+    filters: stat
+    maxActive: 20
+    initialSize: 1
+    maxWait: 60000
+    minIdle: 1
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: select 'x'
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxOpenPreparedStatements: 20
+  mvc:
+    static-path-pattern:/static/**
+  mail:
+    host:smtp.126.com  
+    username:****@126.com  
+    password:password
+    default-encoding=UTF-8
+  ldap:
+#    urls:ldap://ldap.digitalchina.com:389
+#    base:cn=employees,o=dc
+#    username:uid=oauser,cn=appusers,cn=apps,o=dc
+#    password:J2Mha1g4Vmqplz
+    urls: ldap://localhost:389/
+    base.dn: dc=mycompany,dc=com
+    manager:
+      dn: cn=admin,dc=mycompany,dc=com
+      password: admin
+    user.dn.pattern: uid={0},ou=users
+
+    

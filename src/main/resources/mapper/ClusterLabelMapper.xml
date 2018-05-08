@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.apigate.swarmui.mapper.ClusterLabelMapper" >
+  <resultMap id="BaseResultMap" type="com.apigate.swarmui.model.ClusterLabel" >
+    <id column="labelid" property="labelid" jdbcType="INTEGER" />
+    <result column="clusterid" property="clusterid" jdbcType="INTEGER" />
+    <result column="labelname" property="labelname" jdbcType="VARCHAR" />
+    <result column="labelkey" property="labelkey" jdbcType="VARCHAR" />
+    <result column="labelvalue" property="labelvalue" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    labelid, clusterid, labelname, labelkey, labelvalue
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from swarm_cluster_label
+    where labelid = #{labelid,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from swarm_cluster_label
+    where clusterid = #{clusterid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from swarm_cluster_label
+    where labelid = #{labelid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.apigate.swarmui.model.ClusterLabel" >
+    insert into swarm_cluster_label (labelid, clusterid, labelname, 
+      labelkey, labelvalue)
+    values (#{labelid,jdbcType=INTEGER}, #{clusterid,jdbcType=INTEGER}, #{labelname,jdbcType=VARCHAR}, 
+      #{labelkey,jdbcType=VARCHAR}, #{labelvalue,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.apigate.swarmui.model.ClusterLabel" >
+    insert into swarm_cluster_label
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="labelid != null" >
+        labelid,
+      </if>
+      <if test="clusterid != null" >
+        clusterid,
+      </if>
+      <if test="labelname != null" >
+        labelname,
+      </if>
+      <if test="labelkey != null" >
+        labelkey,
+      </if>
+      <if test="labelvalue != null" >
+        labelvalue,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="labelid != null" >
+        #{labelid,jdbcType=INTEGER},
+      </if>
+      <if test="clusterid != null" >
+        #{clusterid,jdbcType=INTEGER},
+      </if>
+      <if test="labelname != null" >
+        #{labelname,jdbcType=VARCHAR},
+      </if>
+      <if test="labelkey != null" >
+        #{labelkey,jdbcType=VARCHAR},
+      </if>
+      <if test="labelvalue != null" >
+        #{labelvalue,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.apigate.swarmui.model.ClusterLabel" >
+    update swarm_cluster_label
+    <set >
+      <if test="clusterid != null" >
+        clusterid = #{clusterid,jdbcType=INTEGER},
+      </if>
+      <if test="labelname != null" >
+        labelname = #{labelname,jdbcType=VARCHAR},
+      </if>
+      <if test="labelkey != null" >
+        labelkey = #{labelkey,jdbcType=VARCHAR},
+      </if>
+      <if test="labelvalue != null" >
+        labelvalue = #{labelvalue,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where labelid = #{labelid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.apigate.swarmui.model.ClusterLabel" >
+    update swarm_cluster_label
+    set clusterid = #{clusterid,jdbcType=INTEGER},
+      labelname = #{labelname,jdbcType=VARCHAR},
+      labelkey = #{labelkey,jdbcType=VARCHAR},
+      labelvalue = #{labelvalue,jdbcType=VARCHAR}
+    where labelid = #{labelid,jdbcType=INTEGER}
+  </update>
+</mapper>

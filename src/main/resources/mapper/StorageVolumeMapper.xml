@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.apigate.swarmui.mapper.StorageVolumeMapper" >
+  <resultMap id="BaseResultMap" type="com.apigate.swarmui.model.StorageVolume" >
+    <id column="volumeid" property="volumeid" jdbcType="INTEGER" />
+    <result column="pvid" property="pvid" jdbcType="INTEGER" />
+    <result column="clusterid" property="clusterid" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="storagesize" property="storagesize" jdbcType="INTEGER" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="StoragePvUsedMap" type="com.apigate.swarmui.model.StoragePvUsed">
+    <result column="pvid" property="pvid" jdbcType="INTEGER" />
+    <result column="volumes" property="volumes" jdbcType="INTEGER" />
+    <result column="storagesize" property="storagesize" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    volumeid, pvid, clusterid, name, storagesize, code
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from swarm_storage_volume
+    where volumeid = #{volumeid,jdbcType=INTEGER}
+  </select>
+  <select id="selectByClusterId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from swarm_storage_volume
+    where clusterid = #{clusterid,jdbcType=INTEGER}
+  </select>
+  <select id="selectByCode" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from swarm_storage_volume
+    where code = #{code,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByUserClusterKey" resultMap="BaseResultMap" parameterType="com.apigate.swarmui.model.UserClusterKey" >
+    select 
+    a.volumeid, a.clusterid, a.pvid, a.name, a.code, a.storagesize
+    from swarm_storage_volume a,swarm_user_volume b
+    where b.userid = #{userid,jdbcType=INTEGER} 
+    and a.clusterid = #{clusterid,jdbcType=INTEGER}
+    and a.volumeid=b.volumeid
+  </select>
+  <select id="countByClusterId" resultType="com.apigate.swarmui.model.StorageVolumeCount" parameterType="java.lang.Integer" >
+    select 
+    count(*) as count,sum(storagesize) as storagesize
+    from swarm_storage_volume
+    where clusterid = #{clusterid,jdbcType=INTEGER}
+  </select>
+  <select id="countByUserClusterKey" resultType="com.apigate.swarmui.model.StorageVolumeCount" parameterType="com.apigate.swarmui.model.UserClusterKey" >
+    select 
+    count(*) as count,sum(a.storagesize) as storagesize
+    from swarm_storage_volume a,swarm_user_volume b
+    where b.userid = #{userid,jdbcType=INTEGER} 
+    and a.clusterid = #{clusterid,jdbcType=INTEGER}
+    and a.volumeid=b.volumeid
+  </select>
+  <select id="countByPvid" resultMap="StoragePvUsedMap" parameterType="java.lang.Integer" >
+  	select sum(1) as volumes,sum(storagesize) as storagesize, pvid from swarm_storage_volume 
+  	where pvid=#{pvid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from swarm_storage_volume
+    where volumeid = #{volumeid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" useGeneratedKeys="true" parameterType="com.apigate.swarmui.model.StorageVolume" keyProperty="volumeid">
+    insert into swarm_storage_volume (pvid, clusterid, 
+      name, storagesize, code
+      )
+    values (#{pvid,jdbcType=INTEGER}, #{clusterid,jdbcType=INTEGER}, 
+      #{name,jdbcType=VARCHAR}, #{storagesize,jdbcType=INTEGER}, #{code,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" useGeneratedKeys="true" parameterType="com.apigate.swarmui.model.StorageVolume" >
+    insert into swarm_storage_volume
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      
+      <if test="pvid != null" >
+        pvid,
+      </if>
+      <if test="clusterid != null" >
+        clusterid,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="storagesize != null" >
+        storagesize,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pvid != null" >
+        #{pvid,jdbcType=INTEGER},
+      </if>
+      <if test="clusterid != null" >
+        #{clusterid,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="storagesize != null" >
+        #{storagesize,jdbcType=INTEGER},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.apigate.swarmui.model.StorageVolume" >
+    update swarm_storage_volume
+    <set >
+      <if test="pvid != null" >
+        pvid = #{pvid,jdbcType=INTEGER},
+      </if>
+      <if test="clusterid != null" >
+        clusterid = #{clusterid,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="storagesize != null" >
+        storagesize = #{storagesize,jdbcType=INTEGER},
+      </if>
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where volumeid = #{volumeid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.apigate.swarmui.model.StorageVolume" >
+    update swarm_storage_volume
+    set pvid = #{pvid,jdbcType=INTEGER},
+      clusterid = #{clusterid,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      storagesize = #{storagesize,jdbcType=INTEGER},
+      code = #{code,jdbcType=VARCHAR}
+    where volumeid = #{volumeid,jdbcType=INTEGER}
+  </update>
+</mapper>

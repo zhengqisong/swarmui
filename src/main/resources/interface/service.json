@@ -1,0 +1,184 @@
+关心的port, cpu, memoryBytes,network,configId,secretId
+
+
+
+{
+  "name":"serviceName",
+  "mode":"replicas|global",
+  "replicas":5, 
+  "labels":{"key":"value"},
+  "endpointSpec":[
+  	{
+      "name":"",
+      "mode":"host|ingress",
+  	  "protocol":"tcp|udp",
+  	  "publishedPort":8080,
+  	  "targetPort":80
+  	}
+  ],
+  "template":{  
+	      "resources":{
+	          "limit":{"cpu":3,"memory":232323},
+	          "reservation":{"cpu":3,"memory":232323}
+	      },
+	      "restartPolicy":{
+	          "condition":"on-failure",
+	          "delay":10000000000,
+	          "maxAttempts":10,
+	          "window":10000000000
+	      },
+	      "placement":["",""],
+	      "network":["",""],
+	      "logDriver":{
+	          "name":"syslog",
+	          "options":{
+	              "syslog-address":"udp://1.2.3.4:1111",
+	              "tag":"myappname"
+	              }
+	          },
+		  "container":{
+		     "image":"docker.io/tomcat:8.0-jre8",
+		     "command":[],
+		     "args":["sleep","5463232"],
+		     "configs":[
+		     	{
+		     	  "file":{
+		     	    "name":"",
+		     	    "uid":"",
+		     	    "gid":"",
+		     	    "mode":640
+		     	  },
+		     	  "code":""   	
+		     	}
+		     ],
+		     "secrets":[
+		        {
+		     	  "file":{
+		     	    "name":"",
+		     	    "uid":"",
+		     	    "gid":"",
+		     	    "mode":640
+		     	  },
+		     	  "code":""  	
+		     	}
+		     ],
+		     "env":["env1","env2"],
+		     "labels":{"key":"value"},
+		     "mounts":[{
+		        "code":"通过卷code,可以找到pvcid，从而找Type=bind,volume,tmpfs"
+		        "target":"",
+		        "path":"",
+		        "readOnly":"false"
+		     }],
+		     "healthcheck":{
+		        "test":["ping", "-c", "1", "127.0.0.1"],
+		        "interval":323,
+		        "timeout":323,
+		        "retries":3,
+		        "startPeriod":323
+		     }
+		  }
+	},
+	"updateConfig":{
+		"parallelism":1,
+		"delay":0,
+		"failureAction":"pause|continue|rollback"
+	}
+
+}
+
+
+{
+  "Name": "web",
+  "TaskTemplate": {
+    "ContainerSpec": {
+      "Image": "nginx:alpine",
+      "Mounts": [
+        {
+          "readOnly": false,
+          "volumeid": 23,
+          "target": "/usr/share/nginx/html",
+          "type": "bind"          
+        }
+      ],
+      "Hosts": [
+        "10.10.10.10 host1",
+        "ABCD:EF01:2345:6789:ABCD:EF01:2345:6789 host2"
+      ],
+      "User": "33",
+      "DNSConfig": {
+        "Nameservers": [
+          "8.8.8.8"
+        ],
+        "Search": [
+          "example.org"
+        ],
+        "Options": [
+          "timeout:3"
+        ]
+      },
+      "Secrets": [
+        {
+          "File": {
+            "Name": "www.example.org.key",
+            "UID": "33",
+            "GID": "33",
+            "Mode": 384
+          },
+          "SecretID": "fpjqlhnwb19zds35k8wn80lq9",
+          "SecretName": "example_org_domain_key"
+        }
+      ]
+    },
+    "LogDriver": {
+      "Name": "json-file",
+      "Options": {
+        "max-file": "3",
+        "max-size": "10M"
+      }
+    },
+    "Placement": {},
+    "Resources": {
+      "Limits": {
+        "MemoryBytes": 104857600
+      },
+      "Reservations": {}
+    },
+    "RestartPolicy": {
+      "Condition": "on-failure",
+      "Delay": 10000000000,
+      "MaxAttempts": 10
+    }
+  },
+  "Mode": {
+    "Replicated": {
+      "Replicas": 4
+    }
+  },
+  "UpdateConfig": {
+    "Parallelism": 2,
+    "Delay": 1000000000,
+    "FailureAction": "pause",
+    "Monitor": 15000000000,
+    "MaxFailureRatio": 0.15
+  },
+  "RollbackConfig": {
+    "Parallelism": 1,
+    "Delay": 1000000000,
+    "FailureAction": "pause",
+    "Monitor": 15000000000,
+    "MaxFailureRatio": 0.15
+  },
+  "EndpointSpec": {
+    "Ports": [
+      {
+        "Protocol": "tcp",
+        "PublishedPort": 8080,
+        "TargetPort": 80
+      }
+    ]
+  },
+  "Labels": {
+    "foo": "bar"
+  }
+}

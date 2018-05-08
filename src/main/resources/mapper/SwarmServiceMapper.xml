@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.apigate.swarmui.mapper.SwarmServiceMapper" >
+  <resultMap id="BaseResultMap" type="com.apigate.swarmui.model.SwarmService" >
+    <id column="serviceid" property="serviceid" jdbcType="VARCHAR" />
+    <result column="clusterid" property="clusterid" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="cpus" property="cpus" jdbcType="BIGINT" />
+    <result column="mems" property="mems" jdbcType="BIGINT" />
+    <result column="replicas" property="replicas" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.apigate.swarmui.model.SwarmService" extends="BaseResultMap" >
+    <result column="config" property="config" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    serviceid, clusterid, name, cpus, mems, replicas
+  </sql>
+  <sql id="Blob_Column_List" >
+    config
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from swarm_service
+    where serviceid = #{serviceid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByClusterIdNameKey" resultMap="ResultMapWithBLOBs" parameterType="com.apigate.swarmui.model.ClusterIdNameKey" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from swarm_service
+    where name = #{name,jdbcType=VARCHAR}
+    and clusterid = #{clusterid,jdbcType=INTEGER}
+  </select>
+  <select id="selectByClusterId" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from swarm_service
+    where clusterid = #{clusterid,jdbcType=INTEGER}
+  </select>
+  <select id="selectByUserClusterKey" resultMap="BaseResultMap" parameterType="com.apigate.swarmui.model.UserClusterKey" >
+    select 
+    a.serviceid, a.clusterid, a.name, a.cpus, a.mems, a.replicas
+    from swarm_service a,swarm_user_service b
+    where b.userid = #{userid,jdbcType=INTEGER} 
+    and a.clusterid = #{clusterid,jdbcType=INTEGER}
+    and a.serviceid=b.serviceid
+  </select>
+  <select id="countMemCpuByClusterId" resultType="com.apigate.swarmui.model.SwarmServiceMemCpuCount" parameterType="java.lang.Integer" >
+    select 
+    sum(cpus) as cpus,sum(mems) as mems
+    from swarm_service
+    where clusterid = #{clusterid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from swarm_service
+    where serviceid = #{serviceid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.apigate.swarmui.model.SwarmService" >
+    insert into swarm_service (serviceid, clusterid, name, 
+      cpus, mems, replicas, 
+      config)
+    values (#{serviceid,jdbcType=VARCHAR}, #{clusterid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
+      #{cpus,jdbcType=BIGINT}, #{mems,jdbcType=BIGINT}, #{replicas,jdbcType=INTEGER}, 
+      #{config,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.apigate.swarmui.model.SwarmService" >
+    insert into swarm_service
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="serviceid != null" >
+        serviceid,
+      </if>
+      <if test="clusterid != null" >
+        clusterid,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="cpus != null" >
+        cpus,
+      </if>
+      <if test="mems != null" >
+        mems,
+      </if>
+      <if test="replicas != null" >
+        replicas,
+      </if>
+      <if test="config != null" >
+        config,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="serviceid != null" >
+        #{serviceid,jdbcType=VARCHAR},
+      </if>
+      <if test="clusterid != null" >
+        #{clusterid,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="cpus != null" >
+        #{cpus,jdbcType=BIGINT},
+      </if>
+      <if test="mems != null" >
+        #{mems,jdbcType=BIGINT},
+      </if>
+      <if test="replicas != null" >
+        #{replicas,jdbcType=INTEGER},
+      </if>
+      <if test="config != null" >
+        #{config,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.apigate.swarmui.model.SwarmService" >
+    update swarm_service
+    <set >
+      <if test="clusterid != null" >
+        clusterid = #{clusterid,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="cpus != null" >
+        cpus = #{cpus,jdbcType=BIGINT},
+      </if>
+      <if test="mems != null" >
+        mems = #{mems,jdbcType=BIGINT},
+      </if>
+      <if test="replicas != null" >
+        replicas = #{replicas,jdbcType=INTEGER},
+      </if>
+      <if test="config != null" >
+        config = #{config,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where serviceid = #{serviceid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.apigate.swarmui.model.SwarmService" >
+    update swarm_service
+    set clusterid = #{clusterid,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      cpus = #{cpus,jdbcType=BIGINT},
+      mems = #{mems,jdbcType=BIGINT},
+      replicas = #{replicas,jdbcType=INTEGER},
+      config = #{config,jdbcType=LONGVARCHAR}
+    where serviceid = #{serviceid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.apigate.swarmui.model.SwarmService" >
+    update swarm_service
+    set clusterid = #{clusterid,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      cpus = #{cpus,jdbcType=BIGINT},
+      mems = #{mems,jdbcType=BIGINT},
+      replicas = #{replicas,jdbcType=INTEGER},
+      config = #{config,jdbcType=LONGVARCHAR}
+    where serviceid = #{serviceid,jdbcType=VARCHAR}
+  </update>
+</mapper>

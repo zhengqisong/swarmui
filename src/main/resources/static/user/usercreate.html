@@ -1,0 +1,102 @@
+
+<div class="am-cf am-padding">
+   <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">系统管理</strong> / <small><a href="javascript:$.contextLoad('/user/userlist.html')">用户管理</a></small> / <small>添加用户</small></div>
+</div>
+
+<hr>
+<script language="javascript" src="/user/usercreate.js?version=0.0.1"></script>
+<form class="am-form" id="userForm" data-am-validator>
+            <div class="am-g am-margin-top">
+              <div class="am-u-sm-4 am-u-md-2 am-text-right">
+                账号
+              </div>
+              <div class="am-u-sm-8 am-u-md-4">
+                <input type="text" name="account" minlength="3" maxlength="200" placeholder="输入账号（至少3 个字符）" class="am-input-sm" required>
+              </div>
+              <div class="am-hide-sm-only am-u-md-6">*必填，不可重复</div>
+            </div>
+            <div class="am-g am-margin-top">
+              <div class="am-u-sm-4 am-u-md-2 am-text-right">
+                姓名
+              </div>
+              <div class="am-u-sm-8 am-u-md-4 am-u-end col-end">
+                <input type="text" name="username" minlength="2" maxlength="200" placeholder="输入姓名（至少 2 个字符）" required class="am-input-sm">
+              </div>
+              <div class="am-hide-sm-only am-u-md-6">*必填</div>
+            </div>
+            <div class="am-g am-margin-top">
+            <div class="am-u-sm-4 am-u-md-2 am-text-right">状态</div>
+            <div class="am-u-sm-8 am-u-md-4">
+            	<label class="am-radio-inline">
+                  <input type="radio" value="normal" name="status" checked required> 正常
+                </label>
+                <label class="am-radio-inline">
+                  <input type="radio" value="suspend" name="status"> 暂停                
+                </label>
+                <label class="am-radio-inline">
+                  <input type="radio" value="leave" name="status"> 离职
+                </label>
+            </div>
+            <div class="am-hide-sm-only am-u-md-6">*必填</div>
+          </div>
+          <div class="am-g am-margin-top">
+            <div class="am-u-sm-4 am-u-md-2 am-text-right">角色</div>
+            <div class="am-u-sm-8 am-u-md-4">
+                  <label class="am-radio-inline">
+                  <input type="radio" value="system" name="role" required> 系统管理员
+                  </label>
+                  <label class="am-radio-inline">
+                  <input type="radio" value="admin" name="role"> 集群管理员
+                  </label>
+                  <label class="am-radio-inline">
+                  <input type="radio" value="service" name="role"> 客服员
+                  </label>
+                  <label class="am-radio-inline">
+                  <input type="radio" value="user" name="role" checked> 业务用户
+                  </label>
+            </div>
+            <div class="am-hide-sm-only am-u-md-6">*必填</div>
+          </div>
+          <div class="am-g am-margin-top">
+             <div class="am-u-sm-4 am-u-md-2 am-text-right">
+               密码
+             </div>
+             <div class="am-u-sm-8 am-u-md-4">
+               <input type="password" id="userPassword" name="passwd" minlength="6" maxlength="64" placeholder="输入密码（至少6 个字符）" required class="am-input-sm">
+             </div>
+             <div class="am-hide-sm-only am-u-md-6">*必填</div>
+           </div>
+
+            <div class="am-g am-margin-top">
+              <div class="am-u-sm-4 am-u-md-2 am-text-right">
+                重复密码
+              </div>
+              <div class="am-u-sm-8 am-u-md-4">
+                <input type="password" id="doc-vld-pwd-3" name="reppasswd" minlength="6" maxlength="64" placeholder="请与上面输入的值一致" data-equal-to="#userPassword" required class="am-input-sm">
+              </div>
+              <div class="am-hide-sm-only am-u-md-6">*必填</div>
+            </div>
+            <div class="am-g am-margin-top">
+              <div class="am-u-sm-4 am-u-md-2 am-text-right">
+                邮箱
+              </div>
+              <div class="am-u-sm-8 am-u-md-4">
+                <input type="email" name="email" minlength="1" placeholder="输入邮箱地址" required class="am-input-sm">
+              </div>
+              <div class="am-hide-sm-only am-u-md-6">*必填</div>
+            </div>
+            <div class="am-g am-margin-top">
+              <div class="am-u-sm-4 am-u-md-2 am-text-right">
+                电话
+              </div>
+              <div class="am-u-sm-8 am-u-md-4">
+                <input type="text" name="telephone" minlength="1" placeholder="输入手机号码" required class="am-input-sm">
+              </div>
+              <div class="am-hide-sm-only am-u-md-6">*必填</div>
+            </div>
+                     
+<div class="am-margin">
+  <button type="submit" class="am-btn am-btn-primary am-btn-xs">提交保存</button>
+  <button type="button" id="new_user_cancel" class="am-btn am-btn-primary am-btn-xs">放弃保存</button>
+</div>
+          </form>

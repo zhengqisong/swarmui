@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.apigate.swarmui.mapper.UserInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.apigate.swarmui.model.UserInfo" >
+    <id column="userid" property="userid" jdbcType="INTEGER" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="account" property="account" jdbcType="VARCHAR" />
+    <result column="passwd" property="passwd" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="telephone" property="telephone" jdbcType="VARCHAR" />
+    <result column="weixin" property="weixin" jdbcType="VARCHAR" />
+    <result column="role" property="role" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />    
+  </resultMap>
+  <sql id="Base_Column_List" >
+    userid, username, account, passwd, email, telephone, weixin, role, status
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from swarm_userinfo
+    where userid = #{userid,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectByAccount" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from swarm_userinfo
+    where account = #{account,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAllUser" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from swarm_userinfo
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from swarm_userinfo
+    where userid = #{userid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.apigate.swarmui.model.UserInfo" >
+    insert into swarm_userinfo (userid, username, account, 
+      passwd, email, telephone, 
+      weixin, role, status)
+    values (#{userid,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{account,jdbcType=VARCHAR}, 
+      md5(#{passwd,jdbcType=VARCHAR}), #{email,jdbcType=VARCHAR}, #{telephone,jdbcType=VARCHAR}, 
+      #{weixin,jdbcType=VARCHAR},#{role,jdbcType=VARCHAR},#{status,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.apigate.swarmui.model.UserInfo" >
+    insert into swarm_userinfo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userid != null" >
+        userid,
+      </if>
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="account != null" >
+        account,
+      </if>
+      <if test="passwd != null" >
+        passwd,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="telephone != null" >
+        telephone,
+      </if>
+      <if test="weixin != null" >
+        weixin,
+      </if>
+      <if test="role != null" >
+        role,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userid != null" >
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="account != null" >
+        #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="passwd != null" >
+        #{passwd,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null" >
+        #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="weixin != null" >
+        #{weixin,jdbcType=VARCHAR},
+      </if>
+      <if test="role != null" >
+        #{role,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.apigate.swarmui.model.UserInfo" >
+    update swarm_userinfo
+    <set >
+      <if test="username != null" >
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="account != null" >
+        account = #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="passwd != null" >
+        passwd = md5(#{passwd,jdbcType=VARCHAR}),
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null" >
+        telephone = #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="weixin != null" >
+        weixin = #{weixin,jdbcType=VARCHAR},
+      </if>
+      <if test="role != null" >
+        role = #{role,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where userid = #{userid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.apigate.swarmui.model.UserInfo" >
+    update swarm_userinfo
+    set username = #{username,jdbcType=VARCHAR},
+      account = #{account,jdbcType=VARCHAR},
+      passwd = md5(#{passwd,jdbcType=VARCHAR}),
+      email = #{email,jdbcType=VARCHAR},
+      telephone = #{telephone,jdbcType=VARCHAR},
+      weixin = #{weixin,jdbcType=VARCHAR},
+      role = #{role,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR}      
+    where userid = #{userid,jdbcType=INTEGER}
+  </update>
+  
+  <select id="logonByAccountAndPasswd" resultMap="BaseResultMap" parameterType="com.apigate.swarmui.model.UserInfo">
+  	select 
+    <include refid="Base_Column_List" />
+    from swarm_userinfo where account=#{account,jdbcType=VARCHAR} and passwd=md5(#{passwd,jdbcType=VARCHAR})
+  </select>
+  
+  <select id="selectforSelectOption" resultType="com.apigate.swarmui.model.SelectOption">
+  	select userid as value,concat(username,'(',account,')') as text
+    from swarm_userinfo where status!='leave'
+  </select>
+</mapper>

@@ -1,0 +1,174 @@
+
+<div class="am-cf am-padding">
+   <div class="am-fl am-cf">
+   <strong class="am-text-primary am-text-lg">首页</strong>
+    / <small><a href="javascript:$.contextLoad('/service/servicelist.html')">服务管理</a></small>
+    / <small>服务详情<span id="channel_servicenameId">()</span></small>
+    </div>
+</div>
+
+<hr>
+<script language="javascript" src="/service/serviceinspect.js?version=0.0.1"></script>
+<div class="am-g">
+        <div class="am-u-sm-12 am-u-md-6">
+          <div class="am-btn-toolbar" id="toolbarId">
+            <div class="am-btn-group am-btn-group-xs">
+           	<button type="button" id="backupId" class="am-btn am-btn-default"><span class="am-icon-mail-reply"></span> 返回</button>
+           	<button type="button" id="reloadId" class="am-btn am-btn-default"><span class="am-icon-mail-reply"></span> 刷新</button>
+            </div>
+          </div>
+        </div>
+</div>
+<div class="am-g">
+       <div class="am-u-sm-12">
+            <table class="am-table am-table-hover table-main" id="taskslistTab">
+              <thead>
+              <tr><th class="table-title">任务列表</th>
+              </tr>
+              <tr>
+                <th class="table-title am-hide-sm-only">ID</th>
+                <th class="table-type">名称</th>
+                <th class="table-author am-hide-sm-only">镜像</th>
+                <th class="table-date am-hide-sm-only">主机ID</th>
+                <th class="table-set">状态</th>
+                <th class="table-set am-hide-sm-only">时间</th>
+                <th class="table-set am-hide-sm-only">网络</th>
+                <th class="table-set am-hide-sm-only">错误</th>
+                
+              </tr>
+              </thead>
+              <tbody >
+              <tr><td colspan="7">
+              数据载入中。
+              </td>
+              </tbody>
+            </table>
+        </div>
+        <div class="am-u-sm-12">
+        <h3></h3>
+            <table class="am-table am-table-striped am-table-hover table-main" id="portslistTab">
+              <thead>
+              <tr><th class="table-title" colspan="5">发布端口</th>
+              </tr>
+              <tr>
+                <th class="table-title am-hide-sm-only">名称</th>
+                <th class="table-type">协议</th>
+                <th class="table-author">内部端口</th>
+                <th class="table-date">发布端口</th>
+                <th class="table-set">发布类型</th>
+              </tr>
+              </thead>
+              <tbody >
+              <tr><td colspan="5">
+              数据载入中。
+              </td>
+              </tr>
+              </tbody>
+            </table>
+        </div>
+        <div class="am-u-sm-12 am-u-md-6" id="servicePanel">
+           <div class="am-panel am-panel-default">
+            <div class="am-panel-hd am-cf" data-am-collapse="{target: '#collapse-panel-service'}">服务基本信息<span class="am-icon-chevron-down am-fr" ></span></div>
+            <div id="collapse-panel-service" class="am-in">
+               <form class="am-form am-form-horizontal">
+			       <div class="am-form-group">
+			       	  <div class="am-u-sm-3 am-text-right">ID</div>
+		              <div class="am-u-sm-9 am-padding-left-0" id="service_id"></div>
+			       </div>
+			       <div class="am-form-group">
+			       	  <div class="am-u-sm-3 am-text-right">名称</div>
+		              <div class="am-u-sm-9 am-padding-left-0" id="service_name"></div>
+			       </div>
+			       <div class="am-form-group">
+			       	  <div class="am-u-sm-3 am-text-right">模式</div>
+		              <div class="am-u-sm-9 am-padding-left-0" id="service_mode"></div>
+			       </div>
+			       <div class="am-form-group">
+			       	  <div class="am-u-sm-3 am-text-right">资源</div>
+		              <div class="am-u-sm-9 am-padding-left-0" id="service_resource"></div>
+			       </div>
+			       <div class="am-form-group">
+			       	  <div class="am-u-sm-3 am-text-right">部署位置</div>
+		              <div class="am-u-sm-9 am-padding-left-0" id="service_placement"></div>
+			       </div>
+				   <div class="am-form-group">
+			       	  <div class="am-u-sm-3 am-text-right">标签</div>
+		              <div class="am-u-sm-9 am-padding-left-0" id="service_label"></div>
+			       </div>
+			       <div class="am-form-group">
+			       	  <div class="am-u-sm-3 am-text-right">网络</div>
+		              <div class="am-u-sm-9 am-padding-left-0" id="service_network"></div>
+			       </div>
+			       <div class="am-form-group">
+			       	  <div class="am-u-sm-3 am-text-right">重启策略</div>
+		              <div class="am-u-sm-9 am-padding-left-0" id="service_restartPolicy"></div>
+			       </div>
+			       <div class="am-form-group">
+			       	  <div class="am-u-sm-3 am-text-right">更新策略</div>
+		              <div class="am-u-sm-9 am-padding-left-0" id="service_updateConfigPolicy"></div>
+			       </div>
+	               <div class="am-form-group">
+			       	  <div class="am-u-sm-3 am-text-right">日志处理</div>
+		              <div class="am-u-sm-9 am-padding-left-0" id="service_logDriver"></div>
+			       </div>
+			       <div class="am-form-group">
+			       	  <div class="am-u-sm-3 am-text-right">创建时间</div>
+		              <div class="am-u-sm-9 am-padding-left-0" id="service_createdAt"></div>
+			       </div>
+				   <div class="am-form-group">
+			       	  <div class="am-u-sm-3 am-text-right">更新时间</div>
+		              <div class="am-u-sm-9 am-padding-left-0" id="service_updatedAt"></div>
+			       </div>
+            	</form>
+            </div>
+           </div>
+        </div>
+        <div class="am-u-sm-12 am-u-md-6" id="containerPanel">
+           <div class="am-panel am-panel-default">
+            <div class="am-panel-hd am-cf" data-am-collapse="{target: '#collapse-panel-container'}">服务容器信息<span class="am-icon-chevron-down am-fr" ></span></div>
+            <div id="collapse-panel-container" class="am-in">
+               <form class="am-form am-form-horizontal">
+			       <div class="am-form-group">
+			       	  <div class="am-u-sm-3 am-text-right">镜像</div>
+		              <div class="am-u-sm-9 am-padding-left-0" id="container_image"></div>
+			       </div>
+			       <div class="am-form-group">
+			       	  <div class="am-u-sm-3 am-text-right">标签</div>
+		              <div class="am-u-sm-9 am-padding-left-0" id="container_labels"></div>
+			       </div>
+			       <div class="am-form-group">
+			       	  <div class="am-u-sm-3 am-text-right">命令</div>
+		              <div class="am-u-sm-9 am-padding-left-0" id="container_command"></div>
+			       </div>
+			       <div class="am-form-group">
+			       	  <div class="am-u-sm-3 am-text-right">参数</div>
+		              <div class="am-u-sm-9 am-padding-left-0" id="container_args"></div>
+			       </div>
+			       <div class="am-form-group">
+			       	  <div class="am-u-sm-3 am-text-right">环境变量</div>
+		              <div class="am-u-sm-9 am-padding-left-0" id="container_env"></div>
+			       </div>
+			       <div class="am-form-group">
+			       	  <div class="am-u-sm-3 am-text-right">敏感数据</div>
+		              <div class="am-u-sm-9 am-padding-left-0" id="container_secrets"></div>
+			       </div>
+			       <div class="am-form-group">
+			       	  <div class="am-u-sm-3 am-text-right">配置文件</div>
+		              <div class="am-u-sm-9 am-padding-left-0" id="container_configs"></div>
+			       </div>
+			       <div class="am-form-group">
+			       	  <div class="am-u-sm-3 am-text-right">存储</div>
+		              <div class="am-u-sm-9 am-padding-left-0" id="container_mounts"></div>
+			       </div>
+			       <div class="am-form-group">
+			       	  <div class="am-u-sm-3 am-text-right">健康检查</div>
+		              <div class="am-u-sm-9 am-padding-left-0" id="container_healthcheck"></div>
+			       </div>
+			   </form>
+            </div>
+           </div>
+        </div>
+        
+
+</div>
+

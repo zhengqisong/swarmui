@@ -1,0 +1,85 @@
+
+<div class="am-cf am-padding">
+   <div class="am-fl am-cf" id="navigationId"><strong class="am-text-primary am-text-lg">系统管理</strong> / <small><a href="javascript:$.contextLoad('/cluster/clusterlist.html')">集群管理</a></small> / <small>存储管理<span id="channel_clusternameId">()</span></small></div>
+</div>
+
+<hr>
+<script language="javascript" src="/cluster/storagepvcreate.js?version=0.0.1"></script>
+<form class="am-form" id="storagePvForm" data-am-validator>
+            <div class="am-g am-margin-top">
+              <div class="am-u-sm-4 am-u-md-2 am-text-right">
+                名称
+              </div>
+              <div class="am-u-sm-8 am-u-md-4 am-u-end col-end">
+                <input type="text" name="name" minlength="2" maxlength="200" placeholder="输入存储名称，便于识别（至少 2 个字符）" required class="am-input-sm">
+              </div>
+              <div class="am-hide-sm-only am-u-md-6">*必填</div>
+            </div>
+            <div class="am-g am-margin-top">
+            <div class="am-u-sm-4 am-u-md-2 am-text-right">存储类型</div>
+            <div class="am-u-sm-8 am-u-md-4">
+            	<label class="am-radio-inline">
+                  <input type="radio" value="glusterfs" name="storagetype" checked required> glusterfs
+                </label>
+                <label class="am-radio-inline">
+                  <input type="radio" value="ceph" name="storagetype"> ceph                
+                </label>
+                <label class="am-radio-inline">
+                  <input type="radio" value="local" name="storagetype"> local                
+                </label>
+                <label class="am-radio-inline">
+                  <input type="radio" value="san" name="storagetype"> san                
+                </label>
+            </div>
+            <div class="am-hide-sm-only am-u-md-6">*必填</div>
+          </div>
+          <div class="am-g am-margin-top">
+              <div class="am-u-sm-4 am-u-md-2 am-text-right">
+                管理容器名称
+              </div>
+              <div class="am-u-sm-8 am-u-md-4 am-u-end col-end">
+                <input type="text" name="containername" minlength="2" maxlength="60" placeholder="输入存储管理的容器名称" required class="am-input-sm">
+              </div>
+              <div class="am-hide-sm-only am-u-md-6">*必填</div>
+            </div>
+          <div class="am-g am-margin-top">
+              <div class="am-u-sm-4 am-u-md-2 am-text-right">
+                地址
+              </div>
+              <div class="am-u-sm-8 am-u-md-4">
+                <input type="text" name="localpath" minlength="1" maxlength="256" placeholder="存储在宿主机上的挂载目录地址" required class="am-input-sm">
+              </div>
+              <div class="am-hide-sm-only am-u-md-6">*必填</div>
+            </div>
+            <div class="am-g am-margin-top">
+              <div class="am-u-sm-4 am-u-md-2 am-text-right">
+                存储容量
+              </div>
+              <div class="am-u-sm-8 am-u-md-4">
+                <input type="number" name="storagesize" min="1" placeholder="存储的最大值，单位G" required class="am-input-sm">
+              </div>
+              <div class="am-hide-sm-only am-u-md-6">*必填</div>
+            </div>
+            <div class="am-g am-margin-top">
+              <div class="am-u-sm-4 am-u-md-2 am-text-right">
+                允许卷数
+              </div>
+              <div class="am-u-sm-8 am-u-md-4">
+                <input type="number" name="volumes" min="1" placeholder="允许建的卷的最大数量" required class="am-input-sm">
+              </div>
+              <div class="am-hide-sm-only am-u-md-6">*必填</div>
+            </div>
+            
+            <div class="am-g am-margin-top-sm">
+              <div class="am-u-sm-12 am-u-md-2 am-text-right admin-form-text">
+                内容描述
+              </div>
+              <div class="am-u-sm-12 am-u-md-10">
+                <textarea rows="3" name="remark" placeholder="描述内容"></textarea>
+              </div>
+            </div>         
+<div class="am-margin">
+  <button type="submit" class="am-btn am-btn-primary am-btn-xs">提交保存</button>
+  <button type="button" id="new_storagepv_cancel" class="am-btn am-btn-primary am-btn-xs">放弃保存</button>
+</div>
+          </form>

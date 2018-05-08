@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.apigate.swarmui.mapper.UserClusterMapper" >
+  <resultMap id="BaseResultMap" type="com.apigate.swarmui.model.UserCluster" >
+    <id column="userid" property="userid" jdbcType="INTEGER" />
+    <id column="clusterid" property="clusterid" jdbcType="INTEGER" />
+    <id column="rights" property="rights" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    userid, clusterid, rights
+  </sql>
+  
+  <select id="selectByAll" resultType="com.apigate.swarmui.model.UserCluster" parameterType="java.lang.Integer" >
+    select userid,a.clusterid,name,a.rights
+    from swarm_user_cluster a, swarm_cluster b
+    where userid = #{userid,jdbcType=INTEGER}
+    and a.clusterid=b.clusterid
+  </select>
+  <select id="selectByGlusterid" resultType="com.apigate.swarmui.model.UserClusterRight" parameterType="java.lang.Integer" >
+    select a.userid,a.username,a.account,a.email,a.telephone, a.weixin, a.role, a.status, b.clusterid,b.rights
+    from swarm_user_cluster b, swarm_userinfo a
+    where a.userid=b.userid 
+    and b.clusterid = #{clusterid,jdbcType=INTEGER}
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.apigate.swarmui.model.UserClusterKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from swarm_user_cluster
+    where userid = #{userid,jdbcType=INTEGER}
+    and clusterid = #{clusterid,jdbcType=INTEGER}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="com.apigate.swarmui.model.UserClusterKey" >
+    delete from swarm_user_cluster
+    where userid = #{userid,jdbcType=INTEGER}
+      and clusterid = #{clusterid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByUserid" parameterType="java.lang.Integer" >
+    delete from swarm_user_cluster
+    where userid = #{userid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByClusterid" parameterType="java.lang.Integer" >
+    delete from swarm_user_cluster
+    where clusterid = #{clusterid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.apigate.swarmui.model.UserCluster" >
+    insert into swarm_user_cluster (userid, clusterid,rights)
+    values (#{userid,jdbcType=INTEGER}, #{clusterid,jdbcType=INTEGER}, #{rights,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.apigate.swarmui.model.UserCluster" >
+    insert into swarm_user_cluster
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userid != null" >
+        userid,
+      </if>
+      <if test="clusterid != null" >
+        clusterid,
+      </if>
+      <if test="rights != null" >
+        rights,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userid != null" >
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="clusterid != null" >
+        #{clusterid,jdbcType=INTEGER},
+      </if>
+      <if test="rights != null" >
+        #{rights,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+</mapper>

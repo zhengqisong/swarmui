@@ -1,0 +1,211 @@
+
+<div class="am-cf am-padding">
+   <div class="am-fl am-cf">
+   <strong class="am-text-primary am-text-lg">首页</strong>
+    / <small><a href="javascript:$.contextLoad('/service/servicelist.html')">服务管理</a></small>
+    / <small>服务升级(<span id="channel_serviceNameId"></span>)</small>
+    </div>
+</div>
+
+<hr>
+<script language="javascript" src="/service/serviceform.js?version=0.0.1"></script>
+<div class="am-g">
+        <div class="am-u-sm-12 am-u-md-6">
+          <div class="am-btn-toolbar" id="toolbarId">
+            <div class="am-btn-group am-btn-group-xs">
+           	<button type="button" id="backupId" class="am-btn am-btn-default"><span class="am-icon-mail-reply"></span> 返回</button>
+            </div>
+          </div>
+        </div>
+</div>
+<div class="am-tabs am-margin" data-am-tabs>
+    <ul class="am-tabs-nav am-nav am-nav-tabs">
+        <li class="am-active"><a href="#tab1">json模式</a></li>
+        <li><a href="#tab2">表单模式</a></li>
+    </ul>
+
+    <div class="am-tabs-bd">
+        <div class="am-tab-panel am-fade am-in am-active" id="tab1">
+        <form class="am-form" id="serviceForm" data-am-validator>
+        <div class="am-g am-margin-top">
+          <div class="am-u-sm-12 am-u-md-12">
+            <textarea rows="10" name="serviceJson" ></textarea>
+          </div>
+        </div> 
+        
+        <div class="am-margin">
+		  <button type="submit" class="am-btn am-btn-primary am-btn-xs">提交保存</button>
+		  <button type="button" id="new_service_cancel" class="am-btn am-btn-primary am-btn-xs">放弃保存</button>
+		</div>  
+        </form>
+        </div>
+        <div class="am-tab-panel am-fade" id="tab2">
+        <form class="am-form" id="serviceForm2" data-am-validator>
+	        <div class="am-g am-margin-top">
+	            <div class="am-u-sm-4 am-u-md-2 am-text-left">服务名称</div>
+	            <div class="am-u-sm-8 am-u-md-10">
+	              <input type="text" name="name" class="am-form-field am-radius" placeholder="英文字母、数字、_、-等组成字符串，全局唯一" disabled required/>
+	            </div>
+	        </div>
+	        
+	        <div class="am-g am-margin-top">
+	            <div class="am-u-sm-4 am-u-md-2 am-text-left">镜像配置信息</div>
+	            <div class="am-u-sm-8 am-u-md-10 am-form-inline">
+	               <div class="am-form-group" id="registerPanel">
+				    <select data-am-selected="{btnSize: 'sm'}" name="register">
+			                <option value="">加载中...</option>
+			        </select>
+				  </div>
+				  <div class="am-form-group">
+				    <input type="text" name="image" class="am-form-field am-radius" placeholder="镜像名:版本，nginx:1.13" required/>
+				  </div>
+				</div>     
+	        </div>
+	        <div class="am-g am-margin-top">
+	            <div class="am-u-sm-4 am-u-md-2 am-text-left">任务调度</div>
+	            <div class="am-u-sm-8 am-u-md-10 am-form-inline">
+	               <div class="am-form-group">
+	                <label class="am-radio-inline">
+	                  <input type="radio" value="global" name="mode" onClick="$('#form_replicas_id').css('display','none');"> 全局模式
+	                </label>
+	                <label class="am-radio-inline">
+	                  <input type="radio" value="replicas" name="mode" onClick="$('#form_replicas_id').css('display','');" checked> 复制模式
+	                </label>
+	              </div>
+	              <div class="am-form-group" style="display:" id="form_replicas_id">
+				    <input type="number" name="replicas" class="am-form-field am-radius" placeholder="实例数" min="1"/>
+				  </div>
+				</div>
+				<div class="am-u-sm-8 am-u-md-10">
+				<div class="am-form-group">
+				    <div class="am-u-sm-4 am-u-md-2 am-text-left am-padding-left-0">部署服务器标签</div>
+	                <div class="am-u-sm-8 am-u-md-10" id="placementPanel">
+				    <select data-am-selected="{btnSize: 'sm'}" name="placement">
+			                <option value="">加载中...</option>
+			        </select>
+			        </div>
+				  </div>
+				</div>     
+	        </div>
+	        <div class="am-g am-margin-top">
+	            <div class="am-u-sm-4 am-u-md-2 am-text-left">网络</div>
+	            <div class="am-u-sm-8 am-u-md-10 am-form-inline am-padding-left-5" id="networkPanel">
+	                <label class="am-checkbox-inline">
+	                  加载中...
+	                </label>
+				</div>
+	        </div>
+	        <div class="am-g am-margin-top">
+	            <div class="am-u-sm-4 am-u-md-2 am-text-left">资源</div>
+	            <div class="am-u-sm-8 am-u-md-10 am-form-inline">
+	                <div class="am-form-group">处理器(核)</div>
+	                <div class="am-form-group">
+	                <input type="number" class="am-form-field am-radius" name="cpu" placeholder="核数" value="1" min="1"/>
+	                </div>
+	                <div class="am-form-group">内存(兆)</div>
+	                <div class="am-form-group">
+	                <input type="number" class="am-form-field am-radius" name="memory" placeholder="M" value="1024" min="256"/>
+	                </div>
+				</div>
+	        </div>
+	        <div class="am-g am-margin-top">
+	            <div class="am-u-sm-4 am-u-md-2 am-text-left">发布端口</div>
+	            <div class="am-u-sm-8 am-u-md-10 am-form-inline">
+	                <div class="am-form-group">端口</div>
+	                <div class="am-form-group">
+	                <input type="text" class="am-form-field am-radius" name="port" placeholder="容器内端口,不填不发布" />
+	                </div>
+	                <div class="am-form-group">协议</div>
+	                <div class="am-form-group">
+	                <label class="am-radio-inline">
+	                  <input type="radio" value="tcp" name="protocol" checked> TCP
+	                </label>
+	                <label class="am-checkbox-inline">
+	                  <input type="radio" value="udp" name="protocol"> UDP
+	                </label>
+	                </div>
+				</div>
+	        </div>
+	        <div class="am-g am-margin-top">
+	            <div class="am-u-sm-4 am-u-md-2 am-text-left">更新策略</div>
+	            <div class="am-u-sm-8 am-u-md-10 am-form-inline">
+	               <div class="am-form-group" id="updateConfigPanel">
+				    <select data-am-selected="{btnSize: 'sm'}" name="failureAction">
+			                <option value="pause">失败时停止更新</option>
+			                <option value="rollback">失败时回滚</option>
+			                <option value="continue">失败时继续更新</option>
+			        </select>
+				  </div>
+				  <div class="am-form-group">
+				    <input type="number" name="delay" class="am-form-field am-radius" placeholder="延迟秒更新" min=0 required/>
+				  </div>
+				  <div class="am-form-group">
+				    <input type="number" name="parallelism" class="am-form-field am-radius" placeholder="并发更新数" min=1 required/>
+				  </div>
+				</div>
+	        </div>
+	        <div class="am-g am-margin-top">
+	            <div class="am-u-sm-4 am-u-md-2 am-text-left">
+	            <button type="button" id="showhidenMoreButton_id" class="am-btn am-btn-default am-btn-xs">高级选项</button>
+	            </div>
+	        </div>
+	        <div class="am-g am-margin-top" id="showhidenMorePanel_id" style="display:none">
+		        <div class="am-g am-margin-top">
+		            <div class="am-u-sm-3 am-u-md-2">启动参数<button type="button" id="argAddBtn">+</button>&nbsp;<button type="button" id="argDelBtn">-</button></div>
+		            <div class="am-u-sm-9 am-u-md-10" id="argPanel">
+		                
+					</div>
+		        </div>
+		        <div class="am-g am-margin-top">
+		            <div class="am-u-sm-3 am-u-md-2">环境变量<button type="button" id="envAddBtn">+</button>&nbsp;<button type="button" id="envDelBtn">-</button></div>
+		            <div class="am-u-sm-9 am-u-md-10 am-form-inline am-padding-left-5" id="envPanel">
+		                
+					</div>
+		        </div>
+		        <div class="am-g am-margin-top">
+		            <div class="am-u-sm-3 am-u-md-2">存储挂载<button type="button" id="mountAddBtn">+</button>&nbsp;<button type="button" id="mountDelBtn">-</button></div>
+		            <div class="am-u-sm-9 am-u-md-10 am-form-inline am-padding-left-5" id="mountPanel">
+		                
+					</div>
+		        </div>
+		        <div class="am-g am-margin-top">
+		            <div class="am-u-sm-3 am-u-md-2">配置文件<button type="button" id="configAddBtn">+</button>&nbsp;<button type="button" id="configDelBtn">-</button></div>
+		            <div class="am-u-sm-9 am-u-md-10 am-form-inline am-padding-left-5" id="configPanel">
+		                
+					</div>
+		        </div>
+		        <div class="am-g am-margin-top">
+		            <div class="am-u-sm-3 am-u-md-2">敏感配置<button type="button" id="secretAddBtn">+</button>&nbsp;<button type="button" id="secretDelBtn">-</button></div>
+		            <div class="am-u-sm-9 am-u-md-10 am-form-inline am-padding-left-5" id="secretPanel">
+		                
+					</div>
+		        </div>
+		        <div class="am-g am-margin-top">
+		            <div class="am-u-sm-3 am-u-md-2">标签设置<button type="button" id="labelAddBtn">+</button>&nbsp;<button type="button" id="labelDelBtn">-</button></div>
+		            <div class="am-u-sm-9 am-u-md-10 am-form-inline am-padding-left-5" id="labelPanel">
+		                
+					</div>
+		        </div>
+		        <div class="am-g am-margin-top">
+		            <div class="am-u-sm-3 am-u-md-2">日志发送<button type="button" id="logAddBtn">+</button>&nbsp;<button type="button" id="logDelBtn">-</button></div>
+		            <div class="am-u-sm-9 am-u-md-10 am-form-inline am-padding-left-5" id="logPanel">
+		                
+					</div>
+		        </div>
+		        <div class="am-g am-margin-top">
+		            <div class="am-u-sm-3 am-u-md-2">重启策略<button type="button" id="restartAddBtn">+</button>&nbsp;<button type="button" id="restartDelBtn">-</button></div>
+		            <div class="am-u-sm-9 am-u-md-10 am-form-inline am-padding-left-5" id="restartPanel">
+		                
+					</div>
+		        </div>		        
+	        </div>
+	        <div class="am-margin">
+			  <button type="submit" class="am-btn am-btn-primary am-btn-xs">提交保存</button>
+			  <button type="button" name="new_service_cancel" class="am-btn am-btn-primary am-btn-xs">放弃保存</button>
+			</div> 
+        </form> 
+        </div>
+    </div>
+          
+</div>
+          

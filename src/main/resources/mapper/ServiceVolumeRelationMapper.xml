@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.apigate.swarmui.mapper.ServiceVolumeRelationMapper" >
+  <resultMap id="BaseResultMap" type="com.apigate.swarmui.model.ServiceVolumeRelation" >
+    <result column="serviceid" property="serviceid" jdbcType="VARCHAR" />
+    <result column="volumeid" property="volumeid" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ServiceResultMap" type="com.apigate.swarmui.model.SwarmServiceBasic" >
+    <result column="serviceid" property="serviceid" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />    
+  </resultMap>
+  <resultMap id="VolumeResultMap" type="com.apigate.swarmui.model.StorageVolume" >
+    <result column="volumeid" property="volumeid" jdbcType="INTEGER" />
+    <result column="pvid" property="pvid" jdbcType="INTEGER" />
+    <result column="clusterid" property="clusterid" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="storagesize" property="storagesize" jdbcType="INTEGER" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    serviceid, configid
+  </sql>
+  <sql id="Service_Column_List" >
+    b.serviceid, b.name
+  </sql>
+  <sql id="Volume_Column_List" >
+    b.volumeid, b.pvid, b.clusterid, b.name, b.storagesize, b.code
+  </sql>
+  <insert id="insert" parameterType="com.apigate.swarmui.model.ServiceVolumeRelation" >
+    insert into swarm_service_volume (serviceid, volumeid)
+    values (#{serviceid,jdbcType=VARCHAR}, #{volumeid,jdbcType=INTEGER})
+  </insert>
+  <delete id="deleteByServiceId" parameterType="java.lang.String" >
+    delete from swarm_service_volume where serviceid = #{serviceid,jdbcType=VARCHAR}
+  </delete>
+  <select id="selectByVolumeId" resultMap="ServiceResultMap" parameterType="java.lang.String" >
+  	select 
+  	<include refid="Service_Column_List" />
+  	from swarm_service_volume a, swarm_service b 
+  	where a.serviceid=b.serviceid and volumeid = #{volumeid,jdbcType=INTEGER}
+  </select>
+  <select id="selectByServiceId" resultMap="VolumeResultMap" parameterType="java.lang.String" >
+  	select 
+  	<include refid="Volume_Column_List" />
+  	from swarm_service_volume a, swarm_volume b 
+  	where a.volumeid=b.volumeid and serviceid = #{serviceid,jdbcType=VARCHAR}
+  </select>
+</mapper>

@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.apigate.swarmui.mapper.ClusterMapper" >
+  <resultMap id="BaseResultMap" type="com.apigate.swarmui.model.Cluster" >
+    <id column="clusterid" property="clusterid" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="base_url" property="baseUrl" jdbcType="VARCHAR" />
+    <result column="version" property="version" jdbcType="VARCHAR" />
+    <result column="capem" property="capem" jdbcType="VARCHAR" />
+    <result column="certpem" property="certpem" jdbcType="VARCHAR" />
+    <result column="keypem" property="keypem" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="maxcpus" property="maxcpus" jdbcType="INTEGER" />
+    <result column="maxmem" property="maxmem" jdbcType="INTEGER" />
+    <result column="maxinstance" property="maxinstance" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="short_Column_List" >
+    clusterid, name, base_url, version, maxcpus, maxmem, 
+    maxinstance, status
+  </sql>
+  <sql id="Base_Column_List" >
+    clusterid, name, base_url, version, capem, certpem, keypem, remark, maxcpus, maxmem, 
+    maxinstance, status
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from swarm_cluster
+    where clusterid = #{clusterid,jdbcType=INTEGER}
+  </select>
+  <select id="selectByName" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from swarm_cluster
+    where name = #{name,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByUserClusterKey" resultMap="BaseResultMap" parameterType="com.apigate.swarmui.model.UserClusterKey" >
+    select 
+    a.clusterid, a.name, a.base_url, a.version, a.maxcpus, a.maxmem, a.maxinstance, a.status
+    from swarm_cluster a,swarm_user_cluster b
+    where b.userid = #{userid,jdbcType=INTEGER} and a.clusterid=b.clusterid
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select 
+    <include refid="short_Column_List" />
+    from swarm_cluster
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from swarm_cluster
+    where clusterid = #{clusterid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" useGeneratedKeys="true" keyProperty="clusterid" parameterType="com.apigate.swarmui.model.Cluster" >
+    insert into swarm_cluster (name, base_url, 
+      version, capem, certpem, 
+      keypem, remark, maxcpus, 
+      maxmem, maxinstance, status
+      )
+    values (#{name,jdbcType=VARCHAR}, #{baseUrl,jdbcType=VARCHAR}, 
+      #{version,jdbcType=VARCHAR}, #{capem,jdbcType=VARCHAR}, #{certpem,jdbcType=VARCHAR}, 
+      #{keypem,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{maxcpus,jdbcType=INTEGER}, 
+      #{maxmem,jdbcType=INTEGER}, #{maxinstance,jdbcType=INTEGER}, #{status,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.apigate.swarmui.model.Cluster" >
+    insert into swarm_cluster
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="clusterid != null" >
+        clusterid,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="baseUrl != null" >
+        base_url,
+      </if>
+      <if test="version != null" >
+        version,
+      </if>
+      <if test="capem != null" >
+        capem,
+      </if>
+      <if test="certpem != null" >
+        certpem,
+      </if>
+      <if test="keypem != null" >
+        keypem,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="maxcpus != null" >
+        maxcpus,
+      </if>
+      <if test="maxmem != null" >
+        maxmem,
+      </if>
+      <if test="maxinstance != null" >
+        maxinstance,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="clusterid != null" >
+        #{clusterid,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="baseUrl != null" >
+        #{baseUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=VARCHAR},
+      </if>
+      <if test="capem != null" >
+        #{capem,jdbcType=VARCHAR},
+      </if>
+      <if test="certpem != null" >
+        #{certpem,jdbcType=VARCHAR},
+      </if>
+      <if test="keypem != null" >
+        #{keypem,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="maxcpus != null" >
+        #{maxcpus,jdbcType=INTEGER},
+      </if>
+      <if test="maxmem != null" >
+        #{maxmem,jdbcType=INTEGER},
+      </if>
+      <if test="maxinstance != null" >
+        #{maxinstance,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.apigate.swarmui.model.Cluster" >
+    update swarm_cluster
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="baseUrl != null" >
+        base_url = #{baseUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null" >
+        version = #{version,jdbcType=VARCHAR},
+      </if>
+      <if test="capem != null" >
+        capem = #{capem,jdbcType=VARCHAR},
+      </if>
+      <if test="certpem != null" >
+        certpem = #{certpem,jdbcType=VARCHAR},
+      </if>
+      <if test="keypem != null" >
+        keypem = #{keypem,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="maxcpus != null" >
+        maxcpus = #{maxcpus,jdbcType=INTEGER},
+      </if>
+      <if test="maxmem != null" >
+        maxmem = #{maxmem,jdbcType=INTEGER},
+      </if>
+      <if test="maxinstance != null" >
+        maxinstance = #{maxinstance,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where clusterid = #{clusterid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.apigate.swarmui.model.Cluster" >
+    update swarm_cluster
+    set name = #{name,jdbcType=VARCHAR},
+      base_url = #{baseUrl,jdbcType=VARCHAR},
+      version = #{version,jdbcType=VARCHAR},
+      capem = #{capem,jdbcType=VARCHAR},
+      certpem = #{certpem,jdbcType=VARCHAR},
+      keypem = #{keypem,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      maxcpus = #{maxcpus,jdbcType=INTEGER},
+      maxmem = #{maxmem,jdbcType=INTEGER},
+      maxinstance = #{maxinstance,jdbcType=INTEGER},
+      status = #{status,jdbcType=VARCHAR}
+    where clusterid = #{clusterid,jdbcType=INTEGER}
+  </update>
+</mapper>

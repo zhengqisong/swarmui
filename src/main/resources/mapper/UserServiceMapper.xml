@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.apigate.swarmui.mapper.UserServiceMapper" >
+  <resultMap id="BaseResultMap" type="com.apigate.swarmui.model.UserService" >
+    <result column="serviceid" property="serviceid" jdbcType="VARCHAR" />
+    <result column="userid" property="userid" jdbcType="INTEGER" />
+    <result column="isowner" property="isowner" jdbcType="VARCHAR" />
+    <result column="rights" property="rights" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List">
+  	serviceid, userid, isowner, rights
+  </sql>
+  <insert id="insert" parameterType="com.apigate.swarmui.model.UserService" >
+    insert into swarm_user_service (serviceid, userid, isowner, 
+      rights)
+    values (#{serviceid,jdbcType=VARCHAR}, #{userid,jdbcType=INTEGER}, #{isowner,jdbcType=VARCHAR}, 
+      #{rights,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.apigate.swarmui.model.UserService" >
+    insert into swarm_user_service
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="serviceid != null" >
+        serviceid,
+      </if>
+      <if test="userid != null" >
+        userid,
+      </if>
+      <if test="isowner != null" >
+        isowner,
+      </if>
+      <if test="rights != null" >
+        rights,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="serviceid != null" >
+        #{serviceid,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="isowner != null" >
+        #{isowner,jdbcType=VARCHAR},
+      </if>
+      <if test="rights != null" >
+        #{rights,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <delete id="deleteByPrimaryKey" parameterType="com.apigate.swarmui.model.UserService" >
+    delete from swarm_user_service
+    where userid = #{userid,jdbcType=INTEGER} and serviceid = #{serviceid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByServiceid" parameterType="java.lang.String" >
+    delete from swarm_user_service
+    where serviceid = #{serviceid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByUserid" parameterType="java.lang.Integer" >
+    delete from swarm_user_service
+    where userid = #{userid,jdbcType=INTEGER}
+  </delete>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.apigate.swarmui.model.UserService" >
+    select 
+    <include refid="Base_Column_List" />
+    from swarm_user_service
+    where userid = #{userid,jdbcType=INTEGER}
+    and serviceid = #{serviceid,jdbcType=INTEGER}
+  </select>
+  <select id="selectByServiceid" resultType="com.apigate.swarmui.model.UserSerivceRight" parameterType="java.lang.String" >
+    select 
+    a.userid,a.username,a.account,a.email,a.telephone,a.weixin,a.role,a.status,b.serviceid as id,b.rights,b.isowner
+    from swarm_user_service b,swarm_userinfo a
+    where a.userid = b.userid
+    and serviceid = #{serviceid,jdbcType=VARCHAR}
+  </select>
+</mapper>

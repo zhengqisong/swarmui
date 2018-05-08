@@ -1,0 +1,115 @@
+
+<div class="am-cf am-padding">
+   <div class="am-fl am-cf">
+   <strong class="am-text-primary am-text-lg">首页</strong>
+    / <small><a href="javascript:$.contextLoad('/network/networklist.html')">网络管理</a></small>
+    / <small>子网详情<span id="channel_networknameId">()</span></small>
+    </div>
+</div>
+
+<hr>
+<script language="javascript" src="/network/networkinspect.js?version=0.0.1"></script>
+<div class="am-g">
+        <div class="am-u-sm-12 am-u-md-6">
+          <div class="am-btn-toolbar" id="toolbarId">
+            <div class="am-btn-group am-btn-group-xs">
+           	<button type="button" id="backupId" class="am-btn am-btn-default"><span class="am-icon-mail-reply"></span> 返回</button>
+            </div>
+          </div>
+        </div>
+</div>
+<form class="am-form" id="networkForm" data-am-validator>
+			<div class="am-g am-margin-top">
+              <div class="am-u-sm-4 am-u-md-2 am-text-right">
+                ID
+              </div>
+              <div class="am-u-sm-8 am-u-md-4">
+                <input type="text" name="networkid" minlength="3" maxlength="200" placeholder="输入网络名称，便于识别（至少3 个字符）" class="am-input-sm" required>
+              </div>
+              <div class="am-hide-sm-only am-u-md-6">*必填，不可重复</div>
+            </div>
+            <div class="am-g am-margin-top">
+              <div class="am-u-sm-4 am-u-md-2 am-text-right">
+                名称
+              </div>
+              <div class="am-u-sm-8 am-u-md-4">
+                <input type="text" name="name" minlength="3" maxlength="200" placeholder="输入网络名称，便于识别（至少3 个字符）" class="am-input-sm" required>
+              </div>
+              <div class="am-hide-sm-only am-u-md-6">*必填，不可重复</div>
+            </div>
+             <div class="am-g am-margin-top">
+              <div class="am-u-sm-4 am-u-md-2 am-text-right">
+	 编码
+              </div>
+              <div class="am-u-sm-8 am-u-md-4">
+                <input type="text" name="code" minlength="3" maxlength="200" placeholder="输入网络名称，便于识别（至少3 个字符）" class="am-input-sm" required>
+              </div>
+              <div class="am-hide-sm-only am-u-md-6">*必填，不可重复</div>
+            </div>
+            <div class="am-g am-margin-top">
+              <div class="am-u-sm-4 am-u-md-2 am-text-right">
+                子网
+              </div>
+              <div class="am-u-sm-8 am-u-md-4">
+                <input type="text" name="subnet" minlength="3" maxlength="200" placeholder="子网及掩码，如:192.168.23.0/24" class="am-input-sm" required>
+              </div>
+              <div class="am-hide-sm-only am-u-md-6">*必填，不可重复</div>
+            </div>
+            <div class="am-g am-margin-top">
+            <div class="am-u-sm-4 am-u-md-2 am-text-right">
+            网关
+              </div>
+              <div class="am-u-sm-8 am-u-md-4">
+                <input type="text" name="gateway" minlength="3" maxlength="200" placeholder="子网网关，如:192.168.23.1" class="am-input-sm" required>
+              </div>
+              <div class="am-hide-sm-only am-u-md-6">*必填，不可重复</div>
+            </div> 
+            <div class="am-g am-margin-top">
+            <div class="am-u-sm-4 am-u-md-2 am-text-right">
+            ip范围
+              </div>
+              <div class="am-u-sm-8 am-u-md-4">
+                <input type="text" name="iprange" minlength="3" maxlength="200" placeholder="子网可用IP段，如:192.168.23.0/24" class="am-input-sm" required>
+              </div>
+              <div class="am-hide-sm-only am-u-md-6">*必填，不可重复</div>
+            </div> 
+            <div class="am-g am-margin-top">
+            <div class="am-u-sm-4 am-u-md-2 am-text-right">
+            网络类型
+              </div>
+              <div class="am-u-sm-8 am-u-md-4">
+                <label class="am-radio-inline">
+                  <input type="radio" value="overlay" name="driver" required checked> overlay
+                </label>
+              </div>
+              <div class="am-hide-sm-only am-u-md-6">*必填，不可重复</div>
+            </div> 
+            <div class="am-g am-margin-top">
+            <div class="am-u-sm-4 am-u-md-2 am-text-right">
+            支持Ipv6
+              </div>
+              <div class="am-u-sm-8 am-u-md-4">
+            	<label class="am-radio-inline">
+                  <input type="radio" value="no" name="ipv6" required> 否
+                </label>
+                <label class="am-radio-inline">
+                  <input type="radio" value="yes" name="ipv6"> 是                
+                </label>
+              </div>
+              <div class="am-hide-sm-only am-u-md-6">*必填，不可重复</div>
+            </div> 
+            <div class="am-g am-margin-top">
+            <div class="am-u-sm-4 am-u-md-2 am-text-right">
+            禁访外网
+              </div>
+              <div class="am-u-sm-8 am-u-md-4">
+            	<label class="am-radio-inline">
+                  <input type="radio" value="no" name="internal" required> 否
+                </label>
+                <label class="am-radio-inline">
+                  <input type="radio" value="yes" name="internal"> 是                
+                </label>
+              </div>
+              <div class="am-hide-sm-only am-u-md-6">*必填，不可重复</div>
+            </div>        
+          </form>

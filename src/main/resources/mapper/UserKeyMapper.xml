@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.apigate.swarmui.mapper.UserKeyMapper" >
+  <resultMap id="BaseResultMap" type="com.apigate.swarmui.model.UserKey" >
+    <id column="keyid" property="keyid" jdbcType="VARCHAR" />
+    <result column="userid" property="userid" jdbcType="INTEGER" />
+    <result column="appsecret" property="appsecret" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    keyid, userid, appsecret
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from swarm_userkey
+    where keyid = #{keyid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from swarm_userkey
+    where userid = #{userid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from swarm_userkey
+    where keyid = #{keyid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.apigate.swarmui.model.UserKey" >
+    insert into swarm_userkey (keyid, userid, appsecret
+      )
+    values (#{keyid,jdbcType=VARCHAR}, #{userid,jdbcType=INTEGER}, #{appsecret,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.apigate.swarmui.model.UserKey" >
+    insert into swarm_userkey
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="keyid != null" >
+        keyid,
+      </if>
+      <if test="userid != null" >
+        userid,
+      </if>
+      <if test="appsecret != null" >
+        appsecret,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="keyid != null" >
+        #{keyid,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="appsecret != null" >
+        #{appsecret,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.apigate.swarmui.model.UserKey" >
+    update swarm_userkey
+    <set >
+      <if test="userid != null" >
+        userid = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="appsecret != null" >
+        appsecret = #{appsecret,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where keyid = #{keyid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.apigate.swarmui.model.UserKey" >
+    update swarm_userkey
+    set userid = #{userid,jdbcType=INTEGER},
+      appsecret = #{appsecret,jdbcType=VARCHAR}
+    where keyid = #{keyid,jdbcType=VARCHAR}
+  </update>
+</mapper>

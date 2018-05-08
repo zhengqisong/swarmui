@@ -1,0 +1,51 @@
+
+<div class="am-cf am-padding">
+   <div class="am-fl am-cf" id="navigationId"><strong class="am-text-primary am-text-lg">系统管理</strong> / <small><a href="javascript:$.contextLoad('/cluster/clusterlist.html')">集群管理</a></small> / <small>镜像中心管理<span id="channel_clusternameId">()</span></small></div>
+</div>
+
+<hr>
+<script language="javascript" src="/cluster/registercreate.js?version=0.0.1"></script>
+<form class="am-form" id="registerForm" data-am-validator>
+            <div class="am-g am-margin-top">
+              <div class="am-u-sm-4 am-u-md-2 am-text-right">
+                名称
+              </div>
+              <div class="am-u-sm-8 am-u-md-4 am-u-end col-end">
+                <input type="text" name="name" minlength="2" maxlength="200" placeholder="输入镜像名称，便于识别（至少 2 个字符）" required class="am-input-sm">
+              </div>
+              <div class="am-hide-sm-only am-u-md-6">*必填</div>
+            </div>
+            <div class="am-g am-margin-top">
+            <div class="am-u-sm-4 am-u-md-2 am-text-right">需要认证</div>
+            <div class="am-u-sm-8 am-u-md-4">
+            	<label class="am-radio-inline">
+                  <input type="radio" value="yes" name="isauth" checked required> 是
+                </label>
+                <label class="am-radio-inline">
+                  <input type="radio" value="no" name="isauth"> 否                
+                </label>
+            </div>
+            <div class="am-hide-sm-only am-u-md-6">*必填</div>
+          </div>
+            <div class="am-g am-margin-top">
+              <div class="am-u-sm-4 am-u-md-2 am-text-right">
+                地址
+              </div>
+              <div class="am-u-sm-8 am-u-md-4">
+                <input type="text" name="address" minlength="1" maxlength="256" placeholder="镜像中心的访问地址" required class="am-input-sm">
+              </div>
+              <div class="am-hide-sm-only am-u-md-6">*必填</div>
+            </div>
+            <div class="am-g am-margin-top-sm">
+              <div class="am-u-sm-12 am-u-md-2 am-text-right admin-form-text">
+                内容描述
+              </div>
+              <div class="am-u-sm-12 am-u-md-10">
+                <textarea rows="3" name="remark" placeholder="描述内容"></textarea>
+              </div>
+            </div>         
+<div class="am-margin">
+  <button type="submit" class="am-btn am-btn-primary am-btn-xs">提交保存</button>
+  <button type="button" id="new_register_cancel" class="am-btn am-btn-primary am-btn-xs">放弃保存</button>
+</div>
+          </form>

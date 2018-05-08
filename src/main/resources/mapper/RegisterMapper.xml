@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.apigate.swarmui.mapper.RegisterMapper" >
+  <resultMap id="BaseResultMap" type="com.apigate.swarmui.model.Register" >
+    <id column="registerid" property="registerid" jdbcType="INTEGER" />
+    <result column="clusterid" property="clusterid" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="isauth" property="isauth" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    registerid, clusterid, name, remark, address, isauth
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from swarm_register
+    where registerid = #{registerid,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from swarm_register
+    where clusterid = #{clusterid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from swarm_register
+    where registerid = #{registerid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.apigate.swarmui.model.Register" >
+    insert into swarm_register (registerid, clusterid, name, 
+      remark, address, isauth
+      )
+    values (#{registerid,jdbcType=INTEGER}, #{clusterid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{isauth,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.apigate.swarmui.model.Register" >
+    insert into swarm_register
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="registerid != null" >
+        registerid,
+      </if>
+      <if test="clusterid != null" >
+        clusterid,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="isauth != null" >
+        isauth,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="registerid != null" >
+        #{registerid,jdbcType=INTEGER},
+      </if>
+      <if test="clusterid != null" >
+        #{clusterid,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="isauth != null" >
+        #{isauth,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.apigate.swarmui.model.Register" >
+    update swarm_register
+    <set >
+      <if test="clusterid != null" >
+        clusterid = #{clusterid,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="isauth != null" >
+        isauth = #{isauth,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where registerid = #{registerid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.apigate.swarmui.model.Register" >
+    update swarm_register
+    set clusterid = #{clusterid,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      isauth = #{isauth,jdbcType=VARCHAR}
+    where registerid = #{registerid,jdbcType=INTEGER}
+  </update>
+</mapper>
