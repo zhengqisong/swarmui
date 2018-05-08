@@ -12,9 +12,6 @@
 ### dashboard
 ![image](https://github.com/zhengqisong/swarmui/blob/master/design/dashboard.png)
 
-### dashboard
-![image](https://github.com/zhengqisong/swarmui/blob/master/design/dashboard.png)
-
 ### 集群管理
 ![image](https://github.com/zhengqisong/swarmui/blob/master/design/cluster.png)
 
