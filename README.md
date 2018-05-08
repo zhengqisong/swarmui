@@ -30,6 +30,3 @@
 ### 容器服务详情
 ![image](https://github.com/zhengqisong/swarmui/blob/master/design/serviceinfo.png)
 
-### 容器服务详情
-![image](https://github.com/zhengqisong/swarmui/blob/master/design/serviceinfo.png)
-
