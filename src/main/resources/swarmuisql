@@ -1,0 +1,322 @@
+set character set utf8;
+
+DROP DATABASE IF EXISTS swarmui;
+CREATE DATABASE IF NOT EXISTS swarmui DEFAULT CHARSET=utf8;
+grant all privileges on swarmui.* to swarmui@'%' identified by 'swarmui_iu09765';
+
+USE swarmui
+
+create table swarm_cluster
+(
+   clusterid            integer not null auto_increment comment '集群ID',
+   name                 varchar(256) comment '集群名称',
+   base_url             varchar(256) comment '连接地址',
+   version              varchar(32) comment 'docker api版本号',
+   capem                varchar(5000) comment '证书内容',
+   certpem              varchar(5000) comment '证书内容',
+   keypem               varchar(5000) comment '证书内容',
+   remark               varchar(512) comment '描述',
+   maxcpus              integer comment '最大cpu数，单位核数',
+   maxmem               integer comment '最大内存数，单位核数',
+   maxinstance          integer comment '最大容器数',
+   status               varchar(20) comment '状态，normal:正常，suspend:暂停',
+   primary key (clusterid)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+alter table swarm_cluster comment '集群信息';
+
+create table swarm_register
+(
+   registerid           int not null auto_increment comment '自增ID',
+   clusterid            integer comment '集群ID',
+   name                 varchar(128) comment '名称',
+   remark               varchar(1024) comment '描述',
+   address              varchar(256) comment '地址',
+   isauth               varchar(20) comment '是否需要认证：yes, no',
+   primary key (registerid)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+alter table swarm_register comment '镜像中心配置';
+alter table swarm_register add constraint FK_Reference_13 foreign key (clusterid)
+      references swarm_cluster (clusterid) on delete restrict on update restrict;
+      
+create table swarm_storage_pv
+(
+   pvid                 integer not null auto_increment comment 'pvID，自增ID',
+   clusterid            integer comment '集群ID',
+   name                 varchar(128) comment 'pv 名称',
+   storagetype          varchar(64) comment '存储类型：glusterfs, ceph,local, san',
+   localpath            varchar(512) comment '本地路径，建议本地路径为共享存储挂在',
+   storagesize          integer comment '总大小，单位G',
+   volumes              integer comment '允许的卷数量',
+   remark               varchar(1024) comment '描述信息',
+   containername        varchar(200),
+   primary key (pvid)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+alter table swarm_storage_pv comment '存储pv';
+
+alter table swarm_storage_pv add constraint FK_Reference_6 foreign key (clusterid)
+      references swarm_cluster (clusterid) on delete restrict on update restrict;
+
+create table swarm_cluster_label
+(
+   labelid              integer not null auto_increment comment '自增ID',
+   clusterid            integer comment '集群ID',
+   labelname            varchar(128),
+   labelkey             varchar(128),
+   labelvalue           varchar(128),
+   primary key (labelid)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+alter table swarm_cluster_label add constraint FK_Reference_15 foreign key (clusterid)
+      references swarm_cluster (clusterid) on delete restrict on update restrict;
+
+create table swarm_network
+(
+   clusterid            integer comment '集群ID',
+   networkid            varchar(64) not null comment '网络id',
+   name                 varchar(64) comment '网络名称',
+   code                 varchar(128) comment 'docker中的network对应的name',
+   subnet               varchar(64) comment '子网',
+   gateway              varchar(64) comment '网关',
+   iprange              varchar(128) comment 'ip范围',
+   driver               varchar(128) comment '驱动',
+   ipv6                 varchar(8) comment '是否支持Ipv6 yes:no',
+   internal             varchar(8) comment '是否禁止访问外网 yes:no',
+   primary key (networkid)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+alter table swarm_network comment '网络';
+
+alter table swarm_network add constraint FK_Reference_2 foreign key (clusterid)
+      references swarm_cluster (clusterid) on delete restrict on update restrict;
+
+create table swarm_storage_volume
+(
+   volumeid             integer not null auto_increment comment '存储ID，自增',
+   pvid                 integer comment 'pvID，自增ID',
+   clusterid            integer comment '集群ID',
+   name                 varchar(256) comment '存储名称',
+   code                 varchar(128) comment 'docker中的服务器中存储目录的name',
+   storagesize          integer comment '存储大小，单位G',
+   primary key (volumeid)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+alter table swarm_storage_volume comment '存储';
+
+alter table swarm_storage_volume add constraint FK_Reference_5 foreign key (clusterid)
+      references swarm_cluster (clusterid) on delete restrict on update restrict;
+      
+alter table swarm_storage_volume add constraint FK_Reference_20 foreign key (pvid)
+      references swarm_storage_pv (pvid) on delete restrict on update restrict;
+      
+create table swarm_secret
+(
+   secretid             varchar(64) not null comment '配置ID',
+   clusterid            integer comment '集群ID',
+   name                 varchar(128) comment '配置内容',
+   code                 varchar(128) comment 'docker中的secret对应的name',
+   primary key (secretid)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+alter table swarm_secret comment '配置管理';
+
+alter table swarm_secret add constraint FK_Reference_4 foreign key (clusterid)
+      references swarm_cluster (clusterid) on delete restrict on update restrict;
+
+create table swarm_service
+(
+   serviceid            varchar(32) not null comment '服务ID',
+   clusterid            integer comment '集群ID',
+   name                 varchar(128) comment '服务名称',
+   cpus                 bigint comment 'cpu核数',
+   mems                 bigint comment '内存大小，单位M',
+   replicas             integer comment '任务数',
+   config               text comment '配置信息',
+   primary key (serviceid)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+alter table swarm_service comment '服务';
+
+alter table swarm_service add constraint FK_Reference_3 foreign key (clusterid)
+      references swarm_cluster (clusterid) on delete restrict on update restrict;
+
+create table swarm_userinfo
+(
+   userid               integer not null auto_increment comment '自增ID',
+   username             varchar(128) comment '用户名',
+   account              varchar(64) comment '账户',
+   passwd               varchar(64) comment '密码',
+   email                varchar(128) comment '邮件地址',
+   telephone            varchar(32) comment '电话号码',
+   weixin               varchar(32) comment '微信ID',
+   role                 varchar(32) comment '用户角色, system：系统管理员，admin：集群管理员，service：客服员，user：业务用户',
+   status               varchar(32) comment '用户状态， normal：正常，suspend：暂停，leave：离职',
+   primary key (userid)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+alter table swarm_userinfo comment '用户信息';
+
+create table swarm_userkey
+(
+   keyid                varchar(64) not null comment 'key',
+   userid               integer comment '自增ID',
+   appsecret            varchar(64),
+   primary key (keyid)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+alter table swarm_userkey add constraint FK_Reference_14 foreign key (userid)
+      references swarm_userinfo (userid) on delete restrict on update restrict;
+      
+create table swarm_user_volume
+(
+   volumeid             integer comment '存储ID，自增',
+   userid               integer comment '自增ID',
+   isowner              varchar(8) comment 'owner',
+   rights                varchar(10) comment 'r:读权限，w:写权限，d:删除权限'
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+alter table swarm_user_volume comment '用户存储卷';
+
+alter table swarm_user_volume add constraint FK_Reference_7 foreign key (volumeid)
+      references swarm_storage_volume (volumeid) on delete restrict on update restrict;
+
+alter table swarm_user_volume add constraint FK_Reference_8 foreign key (userid)
+      references swarm_userinfo (userid) on delete restrict on update restrict;
+
+create table swarm_user_secret
+(
+   userid               integer comment '自增ID',
+   secretid             varchar(64) not null comment '配置ID',
+   isowner              varchar(8) comment 'owner',
+   rights                varchar(10) comment 'r:读权限，w:写权限，d:删除权限'
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+alter table swarm_user_secret comment '用户与配置关系';
+
+alter table swarm_user_secret add constraint FK_Reference_10 foreign key (secretid)
+      references swarm_secret (secretid) on delete restrict on update restrict;
+
+alter table swarm_user_secret add constraint FK_Reference_9 foreign key (userid)
+      references swarm_userinfo (userid) on delete restrict on update restrict;
+
+create table swarm_user_cluster
+(
+   userid               integer not null comment '自增ID',
+   clusterid            integer not null comment '集群ID',
+   rights               varchar(32) default 'user' comment '权限，admin：集群管理员，service：客服员，user：业务用户',
+   primary key (userid, clusterid)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+alter table swarm_user_cluster add constraint FK_Reference_16 foreign key (userid)
+      references swarm_userinfo (userid) on delete restrict on update restrict;
+
+alter table swarm_user_cluster add constraint FK_Reference_17 foreign key (clusterid)
+      references swarm_cluster (clusterid) on delete restrict on update restrict;
+
+
+create table swarm_user_service
+(
+   serviceid            varchar(32) comment '服务ID,自增',
+   userid               integer comment '自增ID',
+   isowner              varchar(8) comment 'owner',
+   rights                varchar(10) comment 'r:读权限，w:写权限，d:删除权限'
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+alter table swarm_user_service add constraint FK_Reference_11 foreign key (serviceid)
+      references swarm_service (serviceid) on delete restrict on update restrict;
+
+alter table swarm_user_service add constraint FK_Reference_12 foreign key (userid)
+      references swarm_userinfo (userid) on delete restrict on update restrict;
+       
+create table swarm_user_network
+(
+   userid               integer comment '自增ID',
+   networkid            varchar(64) comment '网络id',
+   isowner              varchar(8) comment 'owner，yes:no',
+   rights               varchar(10) comment 'r:读权限，w:写权限，d:删除权限'
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+alter table swarm_user_network add constraint FK_Reference_18 foreign key (userid)
+      references swarm_userinfo (userid) on delete restrict on update restrict;
+
+alter table swarm_user_network add constraint FK_Reference_19 foreign key (networkid)
+      references swarm_network (networkid) on delete restrict on update restrict;
+
+create table swarm_config
+(
+   configid             varchar(64) not null comment '配置ID',
+   clusterid            integer comment '集群ID',
+   name                 varchar(128) comment '配置名称',
+   code                 varchar(128) comment 'docker中的secret对应的name',
+   primary key (configid)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+alter table swarm_config add constraint FK_Reference_21 foreign key (clusterid)
+      references swarm_cluster (clusterid) on delete restrict on update restrict;
+
+create table swarm_user_config
+(
+   configid             varchar(64) comment '配置ID',
+   userid               integer comment '自增ID',
+   isowner              varchar(8) comment 'owner，yes:no',
+   rights               varchar(10) comment 'r:读权限，w:写权限，d:删除权限'
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+alter table swarm_user_config add constraint FK_Reference_22 foreign key (configid)
+      references swarm_config (configid) on delete restrict on update restrict;
+
+alter table swarm_user_config add constraint FK_Reference_23 foreign key (userid)
+      references swarm_userinfo (userid) on delete restrict on update restrict;
+
+create table swarm_service_network
+(
+   serviceid            varchar(32) comment '服务ID',
+   networkid            varchar(64) comment '网络id'
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+alter table swarm_service_network add constraint FK_Reference_24 foreign key (serviceid)
+      references swarm_service (serviceid) on delete restrict on update restrict;
+
+alter table swarm_service_network add constraint FK_Reference_25 foreign key (networkid)
+      references swarm_network (networkid) on delete restrict on update restrict;
+
+create table swarm_service_secret
+(
+   serviceid            varchar(32) comment '服务ID',
+   secretid             varchar(64) comment '配置ID'
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+alter table swarm_service_secret add constraint FK_Reference_26 foreign key (serviceid)
+      references swarm_service (serviceid) on delete restrict on update restrict;
+
+alter table swarm_service_secret add constraint FK_Reference_27 foreign key (secretid)
+      references swarm_secret (secretid) on delete restrict on update restrict;
+
+create table swarm_service_config
+(
+   serviceid            varchar(32) comment '服务ID',
+   configid             varchar(64) comment '配置ID'
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+alter table swarm_service_config add constraint FK_Reference_28 foreign key (serviceid)
+      references swarm_service (serviceid) on delete restrict on update restrict;
+
+alter table swarm_service_config add constraint FK_Reference_29 foreign key (configid)
+      references swarm_config (configid) on delete restrict on update restrict;
+
+create table swarm_service_volume
+(
+   serviceid            varchar(32) comment '服务ID',
+   volumeid             integer comment '存储ID，自增'
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+alter table swarm_service_volume add constraint FK_Reference_30 foreign key (serviceid)
+      references swarm_service (serviceid) on delete restrict on update restrict;
+
+alter table swarm_service_volume add constraint FK_Reference_31 foreign key (volumeid)
+      references swarm_storage_volume (volumeid) on delete restrict on update restrict;
+      
+
+insert into swarm_userinfo (username,account,passwd,email,telephone,weixin,role,status) values('系统管理员','admin',md5('adminpwd'),'support@swarmui.com','13693027007',null,'admin','normal');
