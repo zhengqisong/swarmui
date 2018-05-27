@@ -16,7 +16,9 @@
 	</parent>
 	
 	<properties>
-	    <java.version>1.8</java.version>
+	    <java.version>1.7</java.version>
+	    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	    <start-class>com.apigate.swarmui.App</start-class>
 	</properties>
 	
 	<dependencies>
@@ -26,14 +28,17 @@
 	      <version>4.12</version>
 	      <scope>test</scope>
 	    </dependency>
-	    
+	    <dependency>
+	        <groupId>org.springframework.boot</groupId>
+	        <artifactId>spring-boot-starter-tomcat</artifactId>
+	        <scope>provided</scope>
+		</dependency>
 	    <dependency>
             <groupId>org.mybatis.generator</groupId>
             <artifactId>mybatis-generator-core</artifactId>
             <version>1.3.2</version>
             <scope>test</scope>
         </dependency>
-        
         <dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter</artifactId>
@@ -95,6 +100,11 @@
 	<build>
 		<finalName>swarmui</finalName>
 		<plugins>
+		    <plugin>  
+                <groupId>org.springframework.boot</groupId>  
+                <artifactId>spring-boot-maven-plugin</artifactId>  
+            </plugin>
+            <!-- 
 			<plugin>  
 	            <groupId>org.springframework.boot</groupId>  
 	            <artifactId>spring-boot-maven-plugin</artifactId>
@@ -110,7 +120,6 @@
           <groupId>org.springframework.boot</groupId>
           <artifactId>spring-boot-maven-plugin</artifactId>
           <dependencies>
-            <!-- spring热部署 -->
             <dependency>
               <groupId>org.springframework</groupId>
               <artifactId>springloaded</artifactId>
@@ -121,6 +130,8 @@
             <mainClass>cn.springboot.Mainspringboot</mainClass>
           </configuration>
         </plugin>
+        -->
+        <!-- 
         <plugin>
 			<groupId>org.mybatis.generator</groupId>
 			<artifactId>mybatis-generator-maven-plugin</artifactId>
@@ -130,6 +141,7 @@
 				<overwrite>true</overwrite>
 			</configuration>
 		</plugin>
+		 -->
         </plugins>
 	</build>
 </project>
