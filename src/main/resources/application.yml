@@ -55,10 +55,6 @@ spring:
     password:password
     default-encoding=UTF-8
   ldap:
-#    urls:ldap://ldap.digitalchina.com:389
-#    base:cn=employees,o=dc
-#    username:uid=oauser,cn=appusers,cn=apps,o=dc
-#    password:J2Mha1g4Vmqplz
     urls: ldap://localhost:389/
     base.dn: dc=mycompany,dc=com
     manager:
